@@ -94,12 +94,46 @@ select{appearance:none;-webkit-appearance:none;}
           <input value="{{ whats }}" onInput="{{ onWhats }}" inputmode="tel" placeholder="(88) 90000-0000" style="width:100%;background:#0E2240;border:1px solid rgba(168,216,242,0.16);border-radius:13px;padding:15px 16px;font-size:15px;color:#fff;font-family:'Equitan Sans';transition:.15s;"/>
         </div>
         <div>
-          <label style="font-size:12.5px;letter-spacing:0.03em;color:#8FA2B8;display:block;margin-bottom:8px;">E-mail</label>
+          <label style="font-size:12.5px;letter-spacing:0.03em;color:#8FA2B8;display:block;margin-bottom:8px;">E-mail <span style="color:#A8D8F2;">*</span></label>
           <input value="{{ email }}" onInput="{{ onEmail }}" inputmode="email" placeholder="voce@email.com" style="width:100%;background:#0E2240;border:1px solid rgba(168,216,242,0.16);border-radius:13px;padding:15px 16px;font-size:15px;color:#fff;font-family:'Equitan Sans';transition:.15s;"/>
         </div>
+        <div style="display:flex;gap:12px;">
+          <div style="flex:1;">
+            <label style="font-size:12.5px;letter-spacing:0.03em;color:#8FA2B8;display:block;margin-bottom:8px;">CPF <span style="color:#A8D8F2;">*</span></label>
+            <input value="{{ cpf }}" onInput="{{ onCpf }}" inputmode="numeric" placeholder="000.000.000-00" style="width:100%;background:#0E2240;border:1px solid rgba(168,216,242,0.16);border-radius:13px;padding:15px 16px;font-size:15px;color:#fff;font-family:'Equitan Sans';transition:.15s;"/>
+          </div>
+          <div style="flex:1;">
+            <label style="font-size:12.5px;letter-spacing:0.03em;color:#8FA2B8;display:block;margin-bottom:8px;">RG <span style="color:#A8D8F2;">*</span></label>
+            <input value="{{ rg }}" onInput="{{ onRg }}" placeholder="0000000" style="width:100%;background:#0E2240;border:1px solid rgba(168,216,242,0.16);border-radius:13px;padding:15px 16px;font-size:15px;color:#fff;font-family:'Equitan Sans';transition:.15s;"/>
+          </div>
+        </div>
         <div>
-          <label style="font-size:12.5px;letter-spacing:0.03em;color:#8FA2B8;display:block;margin-bottom:8px;">Cidade</label>
-          <input value="{{ cidade }}" onInput="{{ onCidade }}" placeholder="Sua cidade" style="width:100%;background:#0E2240;border:1px solid rgba(168,216,242,0.16);border-radius:13px;padding:15px 16px;font-size:15px;color:#fff;font-family:'Equitan Sans';transition:.15s;"/>
+          <label style="font-size:12.5px;letter-spacing:0.03em;color:#8FA2B8;display:block;margin-bottom:8px;">Data de nascimento <span style="color:#A8D8F2;">*</span></label>
+          <input value="{{ nasc }}" onInput="{{ onNasc }}" inputmode="numeric" placeholder="DD/MM/AAAA" style="width:100%;background:#0E2240;border:1px solid rgba(168,216,242,0.16);border-radius:13px;padding:15px 16px;font-size:15px;color:#fff;font-family:'Equitan Sans';transition:.15s;"/>
+        </div>
+        <div style="display:flex;gap:12px;">
+          <div style="flex:1;">
+            <label style="font-size:12.5px;letter-spacing:0.03em;color:#8FA2B8;display:block;margin-bottom:8px;">CEP <span style="color:#A8D8F2;">*</span></label>
+            <input value="{{ cep }}" onInput="{{ onCep }}" inputmode="numeric" placeholder="00000-000" style="width:100%;background:#0E2240;border:1px solid rgba(168,216,242,0.16);border-radius:13px;padding:15px 16px;font-size:15px;color:#fff;font-family:'Equitan Sans';transition:.15s;"/>
+          </div>
+          <div style="width:96px;">
+            <label style="font-size:12.5px;letter-spacing:0.03em;color:#8FA2B8;display:block;margin-bottom:8px;">UF <span style="color:#A8D8F2;">*</span></label>
+            <input value="{{ estado }}" onInput="{{ onEstado }}" maxlength="2" placeholder="CE" style="width:100%;background:#0E2240;border:1px solid rgba(168,216,242,0.16);border-radius:13px;padding:15px 16px;font-size:15px;color:#fff;font-family:'Equitan Sans';text-transform:uppercase;transition:.15s;"/>
+          </div>
+        </div>
+        <div>
+          <label style="font-size:12.5px;letter-spacing:0.03em;color:#8FA2B8;display:block;margin-bottom:8px;">Endereço (rua e número) <span style="color:#A8D8F2;">*</span></label>
+          <input value="{{ endereco }}" onInput="{{ onEndereco }}" placeholder="Rua Exemplo, 123" style="width:100%;background:#0E2240;border:1px solid rgba(168,216,242,0.16);border-radius:13px;padding:15px 16px;font-size:15px;color:#fff;font-family:'Equitan Sans';transition:.15s;"/>
+        </div>
+        <div style="display:flex;gap:12px;">
+          <div style="flex:1;">
+            <label style="font-size:12.5px;letter-spacing:0.03em;color:#8FA2B8;display:block;margin-bottom:8px;">Bairro <span style="color:#A8D8F2;">*</span></label>
+            <input value="{{ bairro }}" onInput="{{ onBairro }}" placeholder="Seu bairro" style="width:100%;background:#0E2240;border:1px solid rgba(168,216,242,0.16);border-radius:13px;padding:15px 16px;font-size:15px;color:#fff;font-family:'Equitan Sans';transition:.15s;"/>
+          </div>
+          <div style="flex:1;">
+            <label style="font-size:12.5px;letter-spacing:0.03em;color:#8FA2B8;display:block;margin-bottom:8px;">Cidade <span style="color:#A8D8F2;">*</span></label>
+            <input value="{{ cidade }}" onInput="{{ onCidade }}" placeholder="Sua cidade" style="width:100%;background:#0E2240;border:1px solid rgba(168,216,242,0.16);border-radius:13px;padding:15px 16px;font-size:15px;color:#fff;font-family:'Equitan Sans';transition:.15s;"/>
+          </div>
         </div>
         <div>
           <label style="font-size:12.5px;letter-spacing:0.03em;color:#8FA2B8;display:block;margin-bottom:8px;">Você já tem experiência com cuidado?</label>
@@ -119,7 +153,7 @@ select{appearance:none;-webkit-appearance:none;}
         </div>
 
         <sc-if value="{{ showError }}" hint-placeholder-val="{{ false }}">
-          <div style="background:rgba(224,140,140,0.1);border:1px solid rgba(224,140,140,0.35);border-radius:13px;padding:13px 16px;font-size:13.5px;color:#E8B0B0;">Preencha pelo menos <strong style="font-weight:600;">nome</strong> e <strong style="font-weight:600;">WhatsApp</strong> para continuar.</div>
+          <div style="background:rgba(224,140,140,0.1);border:1px solid rgba(224,140,140,0.35);border-radius:13px;padding:13px 16px;font-size:13.5px;color:#E8B0B0;">Preencha todos os campos marcados com <strong style="font-weight:600;">*</strong> (usados para gerar seu contrato) para continuar.</div>
         </sc-if>
 
         <button onClick="{{ submit }}" style="background:#A8D8F2;color:#0A1A32;font-weight:600;font-size:16px;padding:18px;border-radius:14px;border:none;cursor:pointer;font-family:'Equitan Sans';display:flex;align-items:center;justify-content:center;gap:8px;margin-top:6px;box-shadow:0 14px 34px rgba(95,168,216,0.22);">Enviar inscrição <span style="font-size:18px;">→</span></button>
@@ -138,23 +172,54 @@ select{appearance:none;-webkit-appearance:none;}
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:620,&quot;height&quot;:900}}">
 class Component extends DCLogic {
-  state = { nome: "", whats: "", email: "", cidade: "", exp: "", msg: "", sent: false, showError: false };
+  state = { nome: "", whats: "", email: "", cpf: "", rg: "", nasc: "", cep: "", estado: "", endereco: "", bairro: "", cidade: "", exp: "", msg: "", sent: false, showError: false };
   renderVals() {
     const s = this.state;
     const set = (k) => (e) => this.setState({ [k]: e.target.value, showError: false });
+    const setMask = (k, fn) => (e) => this.setState({ [k]: fn(e.target.value), showError: false });
+    const maskCpf = (v) => v.replace(/\D/g, "").slice(0, 11)
+      .replace(/(\d{3})(\d)/, "$1.$2").replace(/(\d{3})(\d)/, "$1.$2").replace(/(\d{3})(\d{1,2})$/, "$1-$2");
+    const maskCep = (v) => v.replace(/\D/g, "").slice(0, 8).replace(/(\d{5})(\d)/, "$1-$2");
+    const maskData = (v) => v.replace(/\D/g, "").slice(0, 8)
+      .replace(/(\d{2})(\d)/, "$1/$2").replace(/(\d{2})(\d)/, "$1/$2");
     return {
-      nome: s.nome, whats: s.whats, email: s.email, cidade: s.cidade, exp: s.exp, msg: s.msg,
+      nome: s.nome, whats: s.whats, email: s.email, cpf: s.cpf, rg: s.rg, nasc: s.nasc,
+      cep: s.cep, estado: s.estado, endereco: s.endereco, bairro: s.bairro, cidade: s.cidade, exp: s.exp, msg: s.msg,
       sent: s.sent, notSent: !s.sent, showError: s.showError,
       firstName: (s.nome || "").trim().split(/\s+/)[0] || "tudo certo",
       onNome: set("nome"), onWhats: set("whats"), onEmail: set("email"),
-      onCidade: set("cidade"), onExp: set("exp"), onMsg: set("msg"),
+      onCpf: setMask("cpf", maskCpf), onRg: set("rg"), onNasc: setMask("nasc", maskData),
+      onCep: setMask("cep", maskCep), onEstado: set("estado"), onEndereco: set("endereco"),
+      onBairro: set("bairro"), onCidade: set("cidade"), onExp: set("exp"), onMsg: set("msg"),
       submit: () => {
-        if (!this.state.nome.trim() || !this.state.whats.trim()) {
+        const s2 = this.state;
+        const req = [s2.nome, s2.whats, s2.email, s2.cpf, s2.rg, s2.nasc, s2.cep, s2.estado, s2.endereco, s2.bairro, s2.cidade];
+        if (req.some((v) => !String(v).trim())) {
           this.setState({ showError: true });
           return;
         }
+        const linhas = [
+          "*Nova inscrição — Curso de Cuidador*",
+          "",
+          "Nome: " + s2.nome,
+          "WhatsApp: " + s2.whats,
+          "E-mail: " + s2.email,
+          "CPF: " + s2.cpf,
+          "RG: " + s2.rg,
+          "Nascimento: " + s2.nasc,
+          "Endereço: " + s2.endereco,
+          "Bairro: " + s2.bairro,
+          "Cidade: " + s2.cidade + " - " + s2.estado.toUpperCase(),
+          "CEP: " + s2.cep,
+          "Experiência: " + (s2.exp || "-"),
+          "Mensagem: " + (s2.msg || "-"),
+        ];
+        const texto = encodeURIComponent(linhas.join("\n"));
         this.setState({ sent: true });
-        if (typeof window !== "undefined") window.scrollTo({ top: 0 });
+        if (typeof window !== "undefined") {
+          window.scrollTo({ top: 0 });
+          window.open("https://wa.me/558881828291?text=" + texto, "_blank");
+        }
       },
     };
   }
