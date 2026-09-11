@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Painel de Alunos — Apta</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+  :root{color-scheme:dark;}
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:#0A1A32;color:#EAF3FB;font-family:-apple-system,'Segoe UI',Roboto,Arial,sans-serif;min-height:100vh;}
+  a{color:#A8D8F2;}
+  .wrap{max-width:1180px;margin:0 auto;padding:22px 18px 60px;}
+  /* Login */
+  .login{max-width:380px;margin:8vh auto;background:#0E2240;border:1px solid rgba(168,216,242,.16);border-radius:18px;padding:30px 26px;}
+  .login h1{font-size:22px;font-weight:700;}
+  .login p{font-size:13.5px;color:#8FA2B8;margin-top:6px;line-height:1.5;}
+  label{font-size:12px;letter-spacing:.03em;color:#8FA2B8;display:block;margin:18px 0 7px;}
+  input,select{width:100%;background:#081326;border:1px solid rgba(168,216,242,.18);border-radius:11px;padding:13px 14px;font-size:14.5px;color:#fff;font-family:inherit;}
+  select{cursor:pointer;}
+  .btn{background:#A8D8F2;color:#0A1A32;font-weight:700;font-size:15px;padding:14px;border-radius:12px;border:none;cursor:pointer;font-family:inherit;width:100%;margin-top:22px;}
+  .btn:disabled{opacity:.6;cursor:default;}
+  .err{background:rgba(224,140,140,.12);border:1px solid rgba(224,140,140,.4);color:#E8B0B0;font-size:13px;border-radius:10px;padding:11px 13px;margin-top:16px;line-height:1.45;}
+  /* Header */
+  .top{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:20px;}
+  .top h1{font-size:20px;font-weight:700;}
+  .top .sub{font-size:12.5px;color:#8FA2B8;margin-top:2px;}
+  .ghost{background:rgba(168,216,242,.12);border:1px solid rgba(168,216,242,.3);color:#EAF3FB;font-size:13px;padding:9px 14px;border-radius:10px;cursor:pointer;font-family:inherit;}
+  /* Stats */
+  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;margin-bottom:18px;}
+  .stat{background:#0E2240;border:1px solid rgba(168,216,242,.14);border-radius:14px;padding:14px 16px;}
+  .stat .n{font-size:24px;font-weight:700;color:#fff;}
+  .stat .l{font-size:11.5px;color:#8FA2B8;margin-top:2px;text-transform:uppercase;letter-spacing:.05em;}
+  .search{width:100%;margin-bottom:14px;}
+  /* Table */
+  .tablewrap{overflow-x:auto;background:#0E2240;border:1px solid rgba(168,216,242,.14);border-radius:16px;}
+  table{width:100%;border-collapse:collapse;font-size:13.5px;min-width:820px;}
+  th,td{text-align:left;padding:12px 14px;border-bottom:1px solid rgba(168,216,242,.09);white-space:nowrap;vertical-align:middle;}
+  th{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#8FA2B8;font-weight:600;}
+  tr:last-child td{border-bottom:none;}
+  td.name{font-weight:600;color:#fff;white-space:normal;}
+  select.mini{padding:7px 9px;font-size:12.5px;border-radius:9px;width:auto;min-width:118px;}
+  .pill-pago{border-color:rgba(120,200,150,.5);}
+  .link{color:#A8D8F2;cursor:pointer;font-size:12.5px;background:none;border:none;font-family:inherit;padding:0;}
+  .muted{color:#8FA2B8;}
+  .empty{padding:40px 20px;text-align:center;color:#8FA2B8;font-size:14px;}
+  /* Modal */
+  .modal{position:fixed;inset:0;background:rgba(4,10,20,.72);display:none;align-items:center;justify-content:center;padding:18px;z-index:50;}
+  .modal.open{display:flex;}
+  .card{background:#0E2240;border:1px solid rgba(168,216,242,.2);border-radius:18px;padding:24px;max-width:460px;width:100%;max-height:88vh;overflow:auto;}
+  .card h2{font-size:19px;font-weight:700;margin-bottom:4px;}
+  .row{display:flex;justify-content:space-between;gap:14px;padding:9px 0;border-bottom:1px solid rgba(168,216,242,.09);font-size:13.5px;}
+  .row .k{color:#8FA2B8;}.row .v{color:#EAF3FB;text-align:right;font-weight:500;word-break:break-word;}
+  .danger{background:rgba(224,140,140,.14);border:1px solid rgba(224,140,140,.4);color:#E8B0B0;font-size:13px;padding:10px 14px;border-radius:10px;cursor:pointer;font-family:inherit;}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="loginView" class="login" hidden>
+  <h1>Painel Apta</h1>
+  <p>Acesso restrito à equipe. Entre com o e-mail e a senha do painel.</p>
+  <label>E-mail</label>
+  <input id="email" type="email" autocomplete="username" placeholder="aptacariri@gmail.com">
+  <label>Senha</label>
+  <input id="password" type="password" autocomplete="current-password" placeholder="••••••••">
+  <div id="loginErr" class="err" hidden></div>
+  <button id="loginBtn" class="btn">Entrar</button>
+</div>
+
+<!-- DASHBOARD -->
+<div id="appView" class="wrap" hidden>
+  <div class="top">
+    <div>
+      <h1>Alunos inscritos</h1>
+      <div class="sub" id="whoami"></div>
+    </div>
+    <div style="display:flex;gap:8px;">
+      <button class="ghost" id="refreshBtn">Atualizar</button>
+      <button class="ghost" id="logoutBtn">Sair</button>
+    </div>
+  </div>
+
+  <div class="stats" id="stats"></div>
+
+  <input id="search" class="search" placeholder="Buscar por nome, CPF, cidade, WhatsApp...">
+
+  <div class="tablewrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Data</th><th>Nome</th><th>WhatsApp</th><th>Cidade</th>
+          <th>Inscrição</th><th>Pagamento</th><th></th>
+        </tr>
+      </thead>
+      <tbody id="rows"></tbody>
+    </table>
+  </div>
+  <div id="empty" class="empty" hidden>Nenhuma inscrição ainda. Assim que alguém se inscrever pelo site, aparece aqui.</div>
+</div>
+
+<!-- MODAL DETALHES -->
+<div class="modal" id="modal">
+  <div class="card">
+    <h2 id="mNome"></h2>
+    <div id="mBody"></div>
+    <div style="display:flex;gap:10px;margin-top:20px;">
+      <button class="ghost" style="flex:1" id="mClose">Fechar</button>
+      <button class="danger" style="flex:1" id="mDelete">Excluir aluno</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const SB_URL = "https://mfbmdilplcgwdqqbgsab.supabase.co";
+const SB_KEY = "sb_publishable_m4KHZH_YMoFy_g962g1zoA_lxK9QZ1S";
+const sb = window.supabase.createClient(SB_URL, SB_KEY);
+
+const $ = (id) => document.getElementById(id);
+let alunos = [];
+let current = null;
+
+const INSCRICAO = ["Nova", "Confirmada", "Cancelada"];
+const PAGAMENTO = ["Pendente", "Pago", "Parcial", "Isento"];
+
+function fmtData(iso){ if(!iso) return "-"; const d=new Date(iso); return d.toLocaleDateString("pt-BR")+" "+d.toLocaleTimeString("pt-BR",{hour:"2-digit",minute:"2-digit"}); }
+function onlyDigits(s){ return (s||"").replace(/\D/g,""); }
+function esc(s){ return (s==null?"":String(s)).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
+
+async function checkSession(){
+  const { data } = await sb.auth.getSession();
+  if (data.session) { showApp(data.session.user.email); }
+  else { $("loginView").hidden = false; }
+}
+
+async function doLogin(){
+  $("loginErr").hidden = true;
+  $("loginBtn").disabled = true; $("loginBtn").textContent = "Entrando...";
+  const email = $("email").value.trim();
+  const password = $("password").value;
+  const { data, error } = await sb.auth.signInWithPassword({ email, password });
+  $("loginBtn").disabled = false; $("loginBtn").textContent = "Entrar";
+  if (error) { $("loginErr").textContent = "E-mail ou senha incorretos."; $("loginErr").hidden = false; return; }
+  $("loginView").hidden = true;
+  showApp(data.user.email);
+}
+
+async function showApp(email){
+  $("appView").hidden = false;
+  $("whoami").textContent = "Conectado como " + email;
+  await load();
+}
+
+async function load(){
+  const { data, error } = await sb.from("alunos").select("*").order("created_at", { ascending: false });
+  if (error) { alert("Erro ao carregar: " + error.message); return; }
+  alunos = data || [];
+  render();
+}
+
+function render(){
+  const q = onlyDigits($("search").value) ? onlyDigits($("search").value) : $("search").value.toLowerCase().trim();
+  const term = $("search").value.toLowerCase().trim();
+  const list = alunos.filter(a => {
+    if (!term) return true;
+    const hay = [a.nome,a.cidade,a.whatsapp,a.cpf,a.email,a.bairro].map(x=>(x||"").toLowerCase()).join(" ");
+    const hayDigits = onlyDigits(a.cpf) + " " + onlyDigits(a.whatsapp);
+    return hay.includes(term) || hayDigits.includes(onlyDigits(term));
+  });
+
+  const pagos = alunos.filter(a=>a.status_pagamento==="Pago").length;
+  const pend = alunos.filter(a=>a.status_pagamento==="Pendente").length;
+  const conf = alunos.filter(a=>a.status_inscricao==="Confirmada").length;
+  $("stats").innerHTML =
+    stat(alunos.length,"Inscritos") + stat(conf,"Confirmados") + stat(pagos,"Pagos") + stat(pend,"Pagamento pendente");
+
+  $("empty").hidden = list.length > 0;
+  $("rows").innerHTML = list.map(rowHtml).join("");
+}
+function stat(n,l){ return `<div class="stat"><div class="n">${n}</div><div class="l">${l}</div></div>`; }
+
+function rowHtml(a){
+  const wa = onlyDigits(a.whatsapp);
+  const waLink = wa ? `<a href="https://wa.me/55${wa}" target="_blank">${esc(a.whatsapp)}</a>` : "-";
+  return `<tr>
+    <td class="muted">${fmtData(a.created_at)}</td>
+    <td class="name">${esc(a.nome)}</td>
+    <td>${waLink}</td>
+    <td>${esc(a.cidade)||"-"}</td>
+    <td>${sel(a.id,"status_inscricao",a.status_inscricao||"Nova",INSCRICAO)}</td>
+    <td>${sel(a.id,"status_pagamento",a.status_pagamento||"Pendente",PAGAMENTO)}</td>
+    <td><button class="link" onclick="openDetails('${a.id}')">Ver</button></td>
+  </tr>`;
+}
+function sel(id,field,val,opts){
+  return `<select class="mini" onchange="updateStatus('${id}','${field}',this.value)">` +
+    opts.map(o=>`<option ${o===val?"selected":""}>${o}</option>`).join("") + `</select>`;
+}
+
+async function updateStatus(id, field, value){
+  const { error } = await sb.from("alunos").update({ [field]: value }).eq("id", id);
+  if (error) { alert("Erro ao atualizar: " + error.message); return; }
+  const a = alunos.find(x=>x.id===id); if (a) a[field]=value;
+  render();
+}
+
+function openDetails(id){
+  const a = alunos.find(x=>x.id===id); if(!a) return;
+  current = a;
+  $("mNome").textContent = a.nome || "Aluno";
+  const rows = [
+    ["WhatsApp", a.whatsapp],["E-mail", a.email],["CPF", a.cpf],["RG", a.rg],
+    ["Nascimento", a.nascimento],["Endereço", a.endereco],["Bairro", a.bairro],
+    ["Cidade / UF", (a.cidade||"")+" - "+(a.estado||"")],["CEP", a.cep],
+    ["Experiência", a.experiencia],["Mensagem", a.mensagem],
+    ["Inscrição em", fmtData(a.created_at)],
+  ];
+  $("mBody").innerHTML = rows.map(([k,v])=>`<div class="row"><span class="k">${k}</span><span class="v">${esc(v)||"-"}</span></div>`).join("");
+  $("modal").classList.add("open");
+}
+
+async function deleteCurrent(){
+  if(!current) return;
+  if(!confirm("Excluir "+(current.nome||"este aluno")+" definitivamente?")) return;
+  const { error } = await sb.from("alunos").delete().eq("id", current.id);
+  if (error) { alert("Erro ao excluir: " + error.message); return; }
+  alunos = alunos.filter(x=>x.id!==current.id);
+  $("modal").classList.remove("open"); current=null; render();
+}
+
+$("loginBtn").onclick = doLogin;
+$("password").addEventListener("keydown", e=>{ if(e.key==="Enter") doLogin(); });
+$("logoutBtn").onclick = async ()=>{ await sb.auth.signOut(); location.reload(); };
+$("refreshBtn").onclick = load;
+$("search").oninput = render;
+$("mClose").onclick = ()=> $("modal").classList.remove("open");
+$("mDelete").onclick = deleteCurrent;
+$("modal").onclick = (e)=>{ if(e.target===$("modal")) $("modal").classList.remove("open"); };
+
+checkSession();
+</script>
+</body>
+</html>
