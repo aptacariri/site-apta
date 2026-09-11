@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+<title>Trabalhe Conosco — Apta Assessoria e Treinamentos</title>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+@font-face{font-family:'Equitan Sans';src:url("uploads/equitan-sans-font/EquitanSans-Light.otf") format("opentype");font-weight:300;font-display:swap;}
+@font-face{font-family:'Equitan Sans';src:url("uploads/equitan-sans-font/zEquitanSans-Regular.otf") format("opentype");font-weight:400;font-display:swap;}
+@font-face{font-family:'Equitan Sans';src:url("uploads/equitan-sans-font/EquitanSans-SemiBold.otf") format("opentype");font-weight:600;font-display:swap;}
+@font-face{font-family:'Equitan Sans';src:url("uploads/equitan-sans-font/EquitanSans-Bold.otf") format("opentype");font-weight:700;font-display:swap;}
+@font-face{font-family:'TT Lakes Neue';src:url("uploads/tt_lakes_neue/TT Lakes Neue Trial Italic.ttf") format("truetype");font-weight:400;font-style:italic;font-display:swap;}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:#0A1A32;}
+::selection{background:#A8D8F2;color:#0A1A32;}
+a{text-decoration:none;color:inherit;}
+a:hover{color:#1C6CA6;}
+input,select,textarea{font-family:'Equitan Sans',sans-serif;}
+input::placeholder,textarea::placeholder{color:#A9B7C7;}
+@keyframes riseIn{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:none}}
+@keyframes softIn{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:none}}
+@keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.js-reveal [data-rise]{opacity:0}
+[data-rise].in{opacity:1;animation:riseIn .72s cubic-bezier(.22,.9,.24,1) forwards}
+[data-rise].in[data-rise="2"]{animation-delay:.09s}
+[data-rise].in[data-rise="3"]{animation-delay:.18s}
+[data-rise].in[data-rise="4"]{animation-delay:.27s}
+.js-reveal [data-soft]{opacity:0}
+[data-soft].in{opacity:1;animation:softIn .8s cubic-bezier(.22,.9,.24,1) forwards}
+@media (prefers-reduced-motion:reduce){[data-rise],[data-soft]{opacity:1!important;animation:none!important}}
+</style>
+</helmet>
+
+<div style="background:#FFFFFF;font-family:'Equitan Sans',sans-serif;color:#0A1A32;width:100%;overflow:hidden;">
+
+  <!-- ===== NAV ===== -->
+  <nav style="position:sticky;top:0;z-index:50;background:rgba(255,255,255,0.93);backdrop-filter:blur(10px);border-bottom:1px solid rgba(10,26,50,0.08);">
+    <div style="max-width:1180px;margin:0 auto;padding:16px 40px;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;">
+      <a href="index.html"><dc-import name="AptaLogo" variant="full" color="#0A1A32" hint-size="128px,34px" style="width:128px"></dc-import></a>
+      <div style="display:flex;align-items:center;gap:26px;flex-wrap:wrap;">
+        <a href="index.html" style="font-size:14.5px;color:#36475C;font-weight:500;transition:color .2s;" style-hover="color:#1C6CA6">Início</a>
+        <a href="curso-cuidador.html" style="font-size:14.5px;color:#36475C;font-weight:500;transition:color .2s;" style-hover="color:#1C6CA6">Curso de Cuidador</a>
+        <a href="#vagas" style="font-size:14.5px;color:#36475C;font-weight:500;transition:color .2s;" style-hover="color:#1C6CA6">Vagas</a>
+        <a href="#candidatar" style="font-size:14px;font-weight:600;color:#fff;background:#1C6CA6;padding:11px 22px;border-radius:30px;transition:background .2s,transform .2s;" style-hover="background:#175a8c;transform:translateY(-1px)">Enviar candidatura</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ===== HERO ===== -->
+  <section style="background:radial-gradient(120% 110% at 80% 0%,#14385C,#0A1A32 58%,#081326 100%);position:relative;overflow:hidden;">
+    <svg viewBox="0 0 133.87 113.94" style="position:absolute;width:380px;right:-90px;bottom:-50px;opacity:0.06;" fill="none" stroke="#A8D8F2" stroke-width="1.5"><path d="M122.15,94.14l-27.94.48c-12.04.21-21.96,8.3-27.41,19.32-13-23.59-31.93-19.36-55.48-19.87C5.99,92.74,0,89.3,0,83.16V10.4C.01,5.76,5.38,2.01,8.86.21l31.74.39c12.24.15,21.92,8.92,25.98,19.98C76.27-3.81,98.19.13,122.95.38c5.16.05,10.91,5.47,10.91,10.89v70.96c.01,6.42-5.58,10.4-11.72,11.9Z"/></svg>
+    <div style="position:absolute;width:96px;height:96px;border-radius:28px;border:2px solid rgba(168,216,242,0.12);left:8%;top:22%;animation:floaty 9s ease-in-out infinite;"></div>
+    <div style="max-width:1180px;margin:0 auto;padding:clamp(56px,7vw,92px) 40px;position:relative;">
+      <div data-rise="1" style="max-width:680px;">
+        <div style="display:inline-flex;align-items:center;gap:10px;background:rgba(168,216,242,0.1);border:1px solid rgba(168,216,242,0.3);padding:8px 16px;border-radius:30px;margin-bottom:22px;">
+          <span style="width:7px;height:7px;border-radius:50%;background:#A8D8F2;flex:none;"></span>
+          <span style="font-size:11.5px;letter-spacing:0.2em;color:#A8D8F2;font-weight:600;">TRABALHE CONOSCO</span>
+        </div>
+        <h1 style="font-weight:700;font-size:clamp(34px,4.8vw,54px);line-height:1.02;letter-spacing:-1px;color:#fff;">Ensine com quem leva o cuidado a <span style="font-family:'TT Lakes Neue';font-style:italic;font-weight:400;color:#A8D8F2;">sério</span></h1>
+        <p style="font-size:17px;line-height:1.6;color:#B9C6D6;margin-top:20px;font-weight:300;max-width:560px;">A Apta está montando seu corpo docente e sua equipe no Cariri. Se você é profissional da saúde e acredita que formação boa é formação prática, queremos te conhecer.</p>
+        <div style="display:flex;gap:12px;margin-top:30px;flex-wrap:wrap;">
+          <a href="#candidatar" style="background:#A8D8F2;color:#0A1A32;font-weight:600;font-size:16px;padding:16px 28px;border-radius:13px;display:inline-flex;align-items:center;gap:9px;box-shadow:0 14px 32px rgba(95,168,216,0.28);transition:transform .22s,box-shadow .22s;" style-hover="transform:translateY(-2px);box-shadow:0 20px 42px rgba(95,168,216,0.4)">Enviar minha candidatura <span style="font-size:18px;">→</span></a>
+          <a href="#vagas" style="border:1px solid rgba(168,216,242,0.35);color:#EAF3FB;font-weight:500;font-size:15px;padding:16px 24px;border-radius:13px;display:inline-flex;align-items:center;gap:9px;transition:border-color .22s,background .22s;" style-hover="border-color:#A8D8F2;background:rgba(168,216,242,0.08)">Ver as vagas abertas</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== POR QUE A APTA ===== -->
+  <section style="background:#FFFFFF;">
+    <div style="max-width:1180px;margin:0 auto;padding:clamp(54px,7vw,84px) 40px;">
+      <div data-rise="1" style="max-width:620px;">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;"><span style="width:28px;height:1px;background:#1C6CA6;"></span><span style="font-size:11.5px;letter-spacing:0.24em;color:#1C6CA6;font-weight:600;">POR QUE ENSINAR NA APTA</span></div>
+        <h2 style="font-weight:700;font-size:clamp(27px,3.4vw,36px);line-height:1.08;letter-spacing:-0.5px;">Uma escola que valoriza <span style="font-family:'TT Lakes Neue';font-style:italic;font-weight:400;color:#1C6CA6;">quem é da prática</span></h2>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px;margin-top:36px;">
+        <div data-rise="1" style="background:#F3F7FC;border:1px solid rgba(10,26,50,0.08);border-radius:18px;padding:28px;transition:transform .3s cubic-bezier(.22,.9,.24,1),box-shadow .3s;" style-hover="transform:translateY(-6px);box-shadow:0 20px 42px rgba(10,26,50,0.1)">
+          <div style="width:48px;height:48px;border-radius:14px;background:#0A1A32;display:flex;align-items:center;justify-content:center;"><svg viewBox="0 0 24 24" style="width:24px;height:24px;" fill="none" stroke="#A8D8F2" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3v6a4 4 0 0 0 8 0V3M9 13v3a4 4 0 0 0 8 0v-1"/><circle cx="18" cy="11" r="2"/></svg></div>
+          <h3 style="font-size:17.5px;font-weight:700;margin-top:18px;">Turmas reduzidas</h3>
+          <p style="font-size:14px;color:#506074;line-height:1.55;margin-top:8px;">Você ensina de perto, corrige na hora e vê o aluno evoluir — sem sala cheia.</p>
+        </div>
+        <div data-rise="2" style="background:#F3F7FC;border:1px solid rgba(10,26,50,0.08);border-radius:18px;padding:28px;transition:transform .3s cubic-bezier(.22,.9,.24,1),box-shadow .3s;" style-hover="transform:translateY(-6px);box-shadow:0 20px 42px rgba(10,26,50,0.1)">
+          <div style="width:48px;height:48px;border-radius:14px;background:#0A1A32;display:flex;align-items:center;justify-content:center;"><svg viewBox="0 0 24 24" style="width:24px;height:24px;" fill="none" stroke="#A8D8F2" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 2h6v3H9zM8 11l1.5 1.5L12 10M8 16l1.5 1.5L12 14"/></svg></div>
+          <h3 style="font-size:17.5px;font-weight:700;margin-top:18px;">Material já pronto</h3>
+          <p style="font-size:14px;color:#506074;line-height:1.55;margin-top:8px;">Plano de curso, ementas, apostila e caderno de atividades estruturados — você foca em ensinar.</p>
+        </div>
+        <div data-rise="3" style="background:#F3F7FC;border:1px solid rgba(10,26,50,0.08);border-radius:18px;padding:28px;transition:transform .3s cubic-bezier(.22,.9,.24,1),box-shadow .3s;" style-hover="transform:translateY(-6px);box-shadow:0 20px 42px rgba(10,26,50,0.1)">
+          <div style="width:48px;height:48px;border-radius:14px;background:#0A1A32;display:flex;align-items:center;justify-content:center;"><svg viewBox="0 0 24 24" style="width:24px;height:24px;" fill="none" stroke="#A8D8F2" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
+          <h3 style="font-size:17.5px;font-weight:700;margin-top:18px;">Carga horária flexível</h3>
+          <p style="font-size:14px;color:#506074;line-height:1.55;margin-top:8px;">Aulas concentradas em fins de semana — compatível com quem já atua na assistência.</p>
+        </div>
+        <div data-rise="4" style="background:#F3F7FC;border:1px solid rgba(10,26,50,0.08);border-radius:18px;padding:28px;transition:transform .3s cubic-bezier(.22,.9,.24,1),box-shadow .3s;" style-hover="transform:translateY(-6px);box-shadow:0 20px 42px rgba(10,26,50,0.1)">
+          <div style="width:48px;height:48px;border-radius:14px;background:#0A1A32;display:flex;align-items:center;justify-content:center;"><svg viewBox="0 0 24 24" style="width:24px;height:24px;" fill="none" stroke="#A8D8F2" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 5.6a4.5 4.5 0 0 0-7.8-1.6L12 5l-1-1a4.5 4.5 0 1 0-6.4 6.3l7.4 7.5 7.4-7.5a4.5 4.5 0 0 0 1.4-4.7z"/></svg></div>
+          <h3 style="font-size:17.5px;font-weight:700;margin-top:18px;">Propósito real</h3>
+          <p style="font-size:14px;color:#506074;line-height:1.55;margin-top:8px;">Formar quem cuida de pessoas idosas e acamadas no Cariri — impacto direto na comunidade.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== VAGAS ===== -->
+  <section id="vagas" style="background:#F3F7FC;border-top:1px solid rgba(10,26,50,0.06);">
+    <div style="max-width:1180px;margin:0 auto;padding:clamp(54px,7vw,88px) 40px;">
+      <div data-rise="1" style="max-width:640px;">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;"><span style="width:28px;height:1px;background:#1C6CA6;"></span><span style="font-size:11.5px;letter-spacing:0.24em;color:#1C6CA6;font-weight:600;">OPORTUNIDADES</span></div>
+        <h2 style="font-weight:700;font-size:clamp(27px,3.4vw,36px);line-height:1.08;letter-spacing:-0.5px;">Estamos formando <span style="font-family:'TT Lakes Neue';font-style:italic;font-weight:400;color:#1C6CA6;">nosso time</span></h2>
+        <p style="font-size:16px;color:#506074;line-height:1.6;margin-top:14px;font-weight:300;">Não encontrou a sua área? Envie a candidatura mesmo assim — mantemos um banco de talentos para as próximas turmas.</p>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:14px;margin-top:38px;">
+        <sc-for list="{{ vagas }}" as="v" hint-placeholder-count="4">
+          <div data-rise="1" style="background:#fff;border:1px solid rgba(10,26,50,0.09);border-radius:18px;overflow:hidden;box-shadow:0 10px 26px rgba(10,26,50,0.05);transition:box-shadow .3s,border-color .3s;" style-hover="box-shadow:0 18px 40px rgba(10,26,50,0.12);border-color:rgba(28,108,166,0.3)">
+            <div onClick="{{ v.toggle }}" style="display:flex;align-items:center;gap:20px;padding:24px 26px;cursor:pointer;">
+              <div style="{{ v.iconWrap }}">
+                <svg viewBox="0 0 24 24" style="width:24px;height:24px;" fill="none" stroke="{{ v.iconColor }}" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-8 0v2M12 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z"/></svg>
+              </div>
+              <div style="flex:1;min-width:0;">
+                <div style="font-size:11px;letter-spacing:0.18em;color:#1C6CA6;font-weight:700;">{{ v.tipo }} · {{ v.local }}</div>
+                <div style="font-size:19px;font-weight:700;margin-top:5px;line-height:1.2;">{{ v.titulo }}</div>
+              </div>
+              <span style="{{ v.badgeStyle }}">{{ v.status }}</span>
+              <span style="{{ v.plusStyle }}">+</span>
+            </div>
+            <div style="{{ v.bodyStyle }}">
+              <div style="padding:0 26px 24px;">
+                <div style="height:1px;background:#EDF2F7;margin-bottom:18px;"></div>
+                <p style="font-size:14.5px;color:#506074;line-height:1.6;">{{ v.resumo }}</p>
+                <div style="font-size:11px;letter-spacing:0.16em;color:#1C6CA6;font-weight:700;margin-top:20px;margin-bottom:10px;">REQUISITOS</div>
+                <sc-for list="{{ v.reqs }}" as="r" hint-placeholder-count="4">
+                  <div style="display:flex;gap:12px;align-items:flex-start;padding:6px 0;">
+                    <svg viewBox="0 0 24 24" style="width:18px;height:18px;flex:none;margin-top:3px;" fill="none" stroke="#1C6CA6" stroke-width="1.7"><path d="M5 13l4 4L19 7"/></svg>
+                    <span style="flex:1;font-size:14px;color:#36475C;line-height:1.5;">{{ r.txt }}</span>
+                  </div>
+                </sc-for>
+                <a href="#candidatar" style="margin-top:18px;background:#1C6CA6;color:#fff;font-weight:600;font-size:14.5px;padding:13px 22px;border-radius:11px;display:inline-flex;align-items:center;gap:8px;transition:background .2s,transform .2s;" style-hover="background:#175a8c;transform:translateY(-1px)">Candidatar-me a esta vaga <span style="font-size:16px;">→</span></a>
+              </div>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== PROCESSO ===== -->
+  <section style="background:radial-gradient(130% 100% at 15% 0%,#102A4C,#0A1A32 60%,#081326 100%);position:relative;overflow:hidden;">
+    <div style="max-width:1180px;margin:0 auto;padding:clamp(54px,7vw,88px) 40px;position:relative;">
+      <div data-rise="1" style="max-width:620px;">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;"><span style="width:28px;height:1px;background:#A8D8F2;"></span><span style="font-size:11.5px;letter-spacing:0.24em;color:#A8D8F2;font-weight:600;">COMO FUNCIONA</span></div>
+        <h2 style="font-weight:700;font-size:clamp(27px,3.4vw,36px);line-height:1.08;letter-spacing:-0.5px;color:#fff;">Quatro passos, <span style="font-family:'TT Lakes Neue';font-style:italic;font-weight:400;color:#A8D8F2;">sem burocracia</span></h2>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;margin-top:38px;">
+        <div data-rise="1" style="background:rgba(168,216,242,0.07);border:1px solid rgba(168,216,242,0.2);border-radius:18px;padding:26px;transition:transform .3s cubic-bezier(.22,.9,.24,1),background .3s;" style-hover="transform:translateY(-6px);background:rgba(168,216,242,0.13)">
+          <span style="font-size:32px;font-weight:700;color:#A8D8F2;line-height:1;">01</span>
+          <h3 style="font-size:17px;font-weight:700;color:#fff;margin-top:16px;">Você envia</h3>
+          <p style="font-size:13.5px;color:#B9C6D6;line-height:1.5;margin-top:8px;">Preencha o formulário abaixo com sua formação e a área em que quer atuar.</p>
+        </div>
+        <div data-rise="2" style="background:rgba(168,216,242,0.07);border:1px solid rgba(168,216,242,0.2);border-radius:18px;padding:26px;transition:transform .3s cubic-bezier(.22,.9,.24,1),background .3s;" style-hover="transform:translateY(-6px);background:rgba(168,216,242,0.13)">
+          <span style="font-size:32px;font-weight:700;color:#A8D8F2;line-height:1;">02</span>
+          <h3 style="font-size:17px;font-weight:700;color:#fff;margin-top:16px;">Analisamos</h3>
+          <p style="font-size:13.5px;color:#B9C6D6;line-height:1.5;margin-top:8px;">Avaliamos formação, registro no conselho e experiência prática na assistência.</p>
+        </div>
+        <div data-rise="3" style="background:rgba(168,216,242,0.07);border:1px solid rgba(168,216,242,0.2);border-radius:18px;padding:26px;transition:transform .3s cubic-bezier(.22,.9,.24,1),background .3s;" style-hover="transform:translateY(-6px);background:rgba(168,216,242,0.13)">
+          <span style="font-size:32px;font-weight:700;color:#A8D8F2;line-height:1;">03</span>
+          <h3 style="font-size:17px;font-weight:700;color:#fff;margin-top:16px;">Conversamos</h3>
+          <p style="font-size:13.5px;color:#B9C6D6;line-height:1.5;margin-top:8px;">Bate-papo por vídeo ou presencial sobre sua trajetória e nossa metodologia.</p>
+        </div>
+        <div data-rise="4" style="background:#A8D8F2;border:1px solid #A8D8F2;border-radius:18px;padding:26px;transition:transform .3s cubic-bezier(.22,.9,.24,1),box-shadow .3s;" style-hover="transform:translateY(-6px);box-shadow:0 20px 44px rgba(95,168,216,0.35)">
+          <span style="font-size:32px;font-weight:700;color:#0A1A32;line-height:1;">04</span>
+          <h3 style="font-size:17px;font-weight:700;color:#0A1A32;margin-top:16px;">Aula demonstrativa</h3>
+          <p style="font-size:13.5px;color:#14385C;line-height:1.5;margin-top:8px;">Você conduz um recorte de aula com a gente e entra no time.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FORMULÁRIO ===== -->
+  <section id="candidatar" style="background:#FFFFFF;">
+    <div style="max-width:1180px;margin:0 auto;padding:clamp(54px,7vw,88px) 40px;display:flex;gap:46px;flex-wrap:wrap;align-items:flex-start;">
+      <div data-rise="1" style="flex:0.85;min-width:280px;">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;"><span style="width:28px;height:1px;background:#1C6CA6;"></span><span style="font-size:11.5px;letter-spacing:0.24em;color:#1C6CA6;font-weight:600;">CANDIDATURA</span></div>
+        <h2 style="font-weight:700;font-size:clamp(27px,3.4vw,36px);line-height:1.08;letter-spacing:-0.5px;">Conte pra gente <span style="font-family:'TT Lakes Neue';font-style:italic;font-weight:400;color:#1C6CA6;">quem você é</span></h2>
+        <p style="font-size:16px;color:#506074;line-height:1.6;margin-top:14px;font-weight:300;">Leva menos de três minutos. Se preferir, mande direto no WhatsApp com o seu currículo em anexo.</p>
+        <a href="https://wa.me/558881828291" target="_blank" style="margin-top:22px;border:1px solid rgba(10,26,50,0.16);color:#0A1A32;font-weight:500;font-size:15px;padding:14px 22px;border-radius:12px;display:inline-flex;align-items:center;gap:10px;transition:border-color .2s,transform .2s;" style-hover="border-color:#1C6CA6;transform:translateY(-1px)">
+          <svg viewBox="0 0 24 24" style="width:19px;height:19px;" fill="#1C6CA6"><path d="M12 2a10 10 0 0 0-8.5 15.2L2 22l4.9-1.3A10 10 0 1 0 12 2Zm0 18a8 8 0 0 1-4.1-1.1l-.3-.2-2.9.8.8-2.8-.2-.3A8 8 0 1 1 12 20Zm4.4-6c-.2-.1-1.4-.7-1.6-.8-.2-.1-.4-.1-.5.1l-.7.9c-.1.2-.3.2-.5.1a6.5 6.5 0 0 1-3.2-2.8c-.2-.4.2-.4.6-1.1.1-.2 0-.4 0-.5l-.7-1.7c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3c-.7.7-.9 1.8-.1 3.2a10.5 10.5 0 0 0 4 3.8c1.5.7 2.1.7 2.9.6.5-.1 1.4-.6 1.6-1.1.2-.6.2-1 .1-1.1Z"/></svg>
+          Enviar pelo WhatsApp
+        </a>
+        <div style="margin-top:26px;background:#F3F7FC;border-radius:16px;padding:22px;">
+          <div style="font-size:11px;letter-spacing:0.16em;color:#1C6CA6;font-weight:700;margin-bottom:12px;">TENHA EM MÃOS</div>
+          <div style="display:flex;flex-direction:column;gap:9px;">
+            <div style="display:flex;gap:11px;align-items:flex-start;"><span style="color:#1C6CA6;font-weight:700;flex:none;">·</span><span style="font-size:14px;color:#36475C;line-height:1.5;">Número de registro no conselho da sua profissão</span></div>
+            <div style="display:flex;gap:11px;align-items:flex-start;"><span style="color:#1C6CA6;font-weight:700;flex:none;">·</span><span style="font-size:14px;color:#36475C;line-height:1.5;">Currículo atualizado em PDF</span></div>
+            <div style="display:flex;gap:11px;align-items:flex-start;"><span style="color:#1C6CA6;font-weight:700;flex:none;">·</span><span style="font-size:14px;color:#36475C;line-height:1.5;">Certificados de especialização, se houver</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div data-soft style="flex:1.15;min-width:320px;">
+        <sc-if value="{{ enviado }}" hint-placeholder-val="{{ false }}">
+          <div style="background:radial-gradient(120% 130% at 80% 5%,#14385C,#0A1A32 70%);border-radius:22px;padding:44px 38px;text-align:center;box-shadow:0 26px 54px rgba(10,26,50,0.28);">
+            <div style="width:64px;height:64px;border-radius:20px;background:#A8D8F2;display:flex;align-items:center;justify-content:center;margin:0 auto;">
+              <svg viewBox="0 0 24 24" style="width:32px;height:32px;" fill="none" stroke="#0A1A32" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>
+            </div>
+            <h3 style="font-size:24px;font-weight:700;color:#fff;margin-top:22px;">Candidatura enviada!</h3>
+            <p style="font-size:15.5px;color:#B9C6D6;line-height:1.6;margin-top:12px;max-width:400px;margin-left:auto;margin-right:auto;font-weight:300;">Recebemos seus dados. Nossa equipe entra em contato em até 5 dias úteis pelo WhatsApp ou e-mail que você informou.</p>
+            <a href="index.html" style="margin-top:26px;display:inline-flex;align-items:center;gap:8px;font-size:15px;font-weight:600;color:#A8D8F2;transition:color .2s;" style-hover="color:#fff">Voltar para a página inicial →</a>
+          </div>
+        </sc-if>
+        <sc-if value="{{ naoEnviado }}" hint-placeholder-val="{{ true }}">
+          <div style="background:#fff;border:1px solid rgba(10,26,50,0.1);border-radius:22px;padding:34px;box-shadow:0 20px 46px rgba(10,26,50,0.08);">
+            <div style="display:flex;flex-direction:column;gap:18px;">
+              <div>
+                <label style="font-size:12.5px;letter-spacing:0.04em;color:#6B7D92;display:block;margin-bottom:7px;font-weight:600;">Nome completo</label>
+                <input type="text" placeholder="Como está no seu documento" style="{{ inputStyle }}">
+              </div>
+              <div style="display:flex;gap:14px;flex-wrap:wrap;">
+                <div style="flex:1;min-width:170px;">
+                  <label style="font-size:12.5px;letter-spacing:0.04em;color:#6B7D92;display:block;margin-bottom:7px;font-weight:600;">WhatsApp</label>
+                  <input type="tel" placeholder="(88) 90000-0000" style="{{ inputStyle }}">
+                </div>
+                <div style="flex:1;min-width:170px;">
+                  <label style="font-size:12.5px;letter-spacing:0.04em;color:#6B7D92;display:block;margin-bottom:7px;font-weight:600;">E-mail</label>
+                  <input type="email" placeholder="seu@email.com" style="{{ inputStyle }}">
+                </div>
+              </div>
+              <div style="display:flex;gap:14px;flex-wrap:wrap;">
+                <div style="flex:1;min-width:170px;">
+                  <label style="font-size:12.5px;letter-spacing:0.04em;color:#6B7D92;display:block;margin-bottom:7px;font-weight:600;">Cidade</label>
+                  <input type="text" placeholder="Juazeiro do Norte" style="{{ inputStyle }}">
+                </div>
+                <div style="flex:1;min-width:170px;">
+                  <label style="font-size:12.5px;letter-spacing:0.04em;color:#6B7D92;display:block;margin-bottom:7px;font-weight:600;">Registro no conselho</label>
+                  <input type="text" placeholder="Ex.: COREN-CE 000000" style="{{ inputStyle }}">
+                </div>
+              </div>
+              <div>
+                <label style="font-size:12.5px;letter-spacing:0.04em;color:#6B7D92;display:block;margin-bottom:7px;font-weight:600;">Área de interesse</label>
+                <select style="{{ inputStyle }}">
+                  <option>Instrutor(a) de Cuidador de Idosos</option>
+                  <option>Instrutor(a) de Primeiros Socorros</option>
+                  <option>Consultor(a) em Amamentação</option>
+                  <option>Instrutor(a) para treinamentos em instituições (B2B)</option>
+                  <option>Apoio administrativo e coordenação</option>
+                  <option>Banco de talentos — outra área</option>
+                </select>
+              </div>
+              <div>
+                <label style="font-size:12.5px;letter-spacing:0.04em;color:#6B7D92;display:block;margin-bottom:7px;font-weight:600;">Formação e experiência</label>
+                <textarea rows="4" placeholder="Conte sua formação, especializações e onde você atua na prática hoje." style="{{ textareaStyle }}"></textarea>
+              </div>
+              <div>
+                <label style="font-size:12.5px;letter-spacing:0.04em;color:#6B7D92;display:block;margin-bottom:7px;font-weight:600;">Por que você quer ensinar?</label>
+                <textarea rows="3" placeholder="Em poucas linhas, o que te move a formar novos cuidadores." style="{{ textareaStyle }}"></textarea>
+              </div>
+              <div style="display:flex;gap:11px;align-items:flex-start;">
+                <span style="width:18px;height:18px;border:1.5px solid #C8D4E2;border-radius:5px;flex:none;margin-top:2px;"></span>
+                <span style="font-size:13px;color:#6B7D92;line-height:1.5;">Autorizo a Apta a usar meus dados para contato sobre esta candidatura.</span>
+              </div>
+              <button onClick="{{ enviar }}" style="{{ btnStyle }}">Enviar candidatura →</button>
+              <p style="font-size:12px;color:#A9B7C7;text-align:center;line-height:1.5;">Retorno em até 5 dias úteis · seus dados não são compartilhados</p>
+            </div>
+          </div>
+        </sc-if>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer style="background:#081326;border-top:1px solid rgba(168,216,242,0.1);">
+    <div style="max-width:1180px;margin:0 auto;padding:52px 40px 30px;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:36px;">
+      <div style="min-width:220px;">
+        <dc-import name="AptaLogo" variant="full" color="#F4F6F9" hint-size="150px,40px" style="width:150px"></dc-import>
+        <div style="font-family:'TT Lakes Neue';font-style:italic;font-size:14px;color:#A8D8F2;margin-top:16px;">Excelência em formação na saúde</div>
+        <p style="font-size:13px;color:#8FA2B8;line-height:1.55;margin-top:12px;max-width:240px;">Escola de formação livre em saúde em Juazeiro do Norte — atendemos toda a região do Cariri.</p>
+      </div>
+      <div>
+        <div style="font-size:12px;letter-spacing:0.16em;color:#5FA8D8;font-weight:600;margin-bottom:16px;">CURSOS</div>
+        <div style="display:flex;flex-direction:column;gap:11px;">
+          <a href="curso-cuidador.html" style="font-size:14px;color:#B9C6D6;transition:color .2s;" style-hover="color:#A8D8F2">Cuidador de Pessoa Idosa</a>
+          <a href="index.html#cursos" style="font-size:14px;color:#B9C6D6;transition:color .2s;" style-hover="color:#A8D8F2">Primeiros Socorros</a>
+          <a href="index.html#cursos" style="font-size:14px;color:#B9C6D6;transition:color .2s;" style-hover="color:#A8D8F2">Consultoria em Amamentação</a>
+          <a href="index.html#cursos" style="font-size:14px;color:#B9C6D6;transition:color .2s;" style-hover="color:#A8D8F2">Treinamentos para empresas</a>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:12px;letter-spacing:0.16em;color:#5FA8D8;font-weight:600;margin-bottom:16px;">A APTA</div>
+        <div style="display:flex;flex-direction:column;gap:11px;">
+          <a href="index.html" style="font-size:14px;color:#B9C6D6;transition:color .2s;" style-hover="color:#A8D8F2">Página inicial</a>
+          <a href="#vagas" style="font-size:14px;color:#B9C6D6;transition:color .2s;" style-hover="color:#A8D8F2">Vagas abertas</a>
+          <a href="#candidatar" style="font-size:14px;color:#B9C6D6;transition:color .2s;" style-hover="color:#A8D8F2">Enviar candidatura</a>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:12px;letter-spacing:0.16em;color:#5FA8D8;font-weight:600;margin-bottom:16px;">CONTATO</div>
+        <div style="display:flex;flex-direction:column;gap:11px;">
+          <a href="https://wa.me/558881828291" target="_blank" style="font-size:14px;color:#B9C6D6;transition:color .2s;" style-hover="color:#A8D8F2">WhatsApp (88) 8182-8291</a>
+          <a href="https://www.instagram.com/aptacariri/" target="_blank" style="font-size:14px;color:#B9C6D6;transition:color .2s;" style-hover="color:#A8D8F2">@aptacariri</a>
+          <span style="font-size:14px;color:#B9C6D6;">Juazeiro do Norte – CE</span>
+        </div>
+      </div>
+    </div>
+    <div style="border-top:1px solid rgba(168,216,242,0.1);">
+      <div style="max-width:1180px;margin:0 auto;padding:18px 40px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;">
+        <span style="font-size:11.5px;color:#3E5470;">© 2026 Apta Assessoria e Treinamentos</span>
+        <span style="font-size:11.5px;color:#3E5470;">Juazeiro do Norte – CE · @aptacariri</span>
+      </div>
+    </div>
+  </footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1180,&quot;height&quot;:840}}">
+class Component extends DCLogic {
+  state = { open: 0, enviado: false };
+
+  componentDidMount() { this.watch(); }
+  componentDidUpdate() { this.watch(); }
+  componentWillUnmount() { if (this._io) this._io.disconnect(); }
+
+  watch() {
+    if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (typeof IntersectionObserver === "undefined") return;
+    const root = document.documentElement;
+    if (!root.classList.contains("js-reveal")) {
+      root.classList.add("js-reveal");
+      // rede de segurança: se o observer não disparar, tudo aparece
+      setTimeout(() => {
+        document.querySelectorAll("[data-rise]:not(.in),[data-soft]:not(.in)").forEach((el) => {
+          const r = el.getBoundingClientRect();
+          if (r.top < (window.innerHeight || 800) * 1.2) el.classList.add("in");
+        });
+      }, 500);
+      setTimeout(() => {
+        document.querySelectorAll("[data-rise]:not(.in),[data-soft]:not(.in)").forEach((el) => el.classList.add("in"));
+      }, 2600);
+    }
+    if (!this._io) {
+      this._io = new IntersectionObserver((entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) { e.target.classList.add("in"); this._io.unobserve(e.target); }
+        });
+      }, { rootMargin: "0px 0px -12% 0px", threshold: 0.08 });
+    }
+    document.querySelectorAll("[data-rise]:not(.in),[data-soft]:not(.in)").forEach((el) => {
+      if (!el.dataset.obs) { el.dataset.obs = "1"; this._io.observe(el); }
+    });
+  }
+
+  renderVals() {
+    const open = this.state.open;
+
+    const field = {
+      width: "100%", padding: "13px 15px", fontSize: "15px",
+      border: "1px solid #D6E0EC", borderRadius: "11px",
+      background: "#FBFDFF", color: "#0A1A32", outline: "none",
+      transition: "border-color .2s, box-shadow .2s",
+    };
+
+    const raw = [
+      {
+        titulo: "Instrutor(a) de Cuidador de Pessoa Idosa e Acamada",
+        tipo: "Instrutoria", local: "Juazeiro do Norte – CE", status: "Aberta", aberta: true,
+        resumo: "Conduzir aulas teóricas e práticas do curso de 80 horas, com turmas reduzidas, nos fins de semana. Material didático e plano de aula já estruturados.",
+        reqs: [
+          "Graduação em Enfermagem, Fisioterapia, Terapia Ocupacional ou Nutrição",
+          "Registro ativo no conselho de classe",
+          "Experiência prática em assistência a pessoa idosa ou acamada",
+          "Disponibilidade para aulas em sábados e domingos",
+        ],
+      },
+      {
+        titulo: "Instrutor(a) de Primeiros Socorros e Suporte Básico de Vida",
+        tipo: "Instrutoria", local: "Região do Cariri", status: "Banco de talentos", aberta: false,
+        resumo: "Ministrar o curso de Primeiros Socorros e o módulo de emergências da formação de cuidadores, com prática em manequim e simulação de casos.",
+        reqs: [
+          "Formação em saúde com registro no conselho",
+          "Certificação em suporte básico de vida (desejável instrutor)",
+          "Vivência em urgência, emergência ou pré-hospitalar",
+        ],
+      },
+      {
+        titulo: "Consultor(a) em Amamentação",
+        tipo: "Consultoria", local: "Região do Cariri", status: "Banco de talentos", aberta: false,
+        resumo: "Estruturar e conduzir a consultoria em aleitamento materno da Apta, no atendimento a gestantes e puérperas e em oficinas para famílias.",
+        reqs: [
+          "Enfermagem, Medicina, Nutrição ou Fonoaudiologia com registro ativo",
+          "Formação ou certificação em consultoria em amamentação (IBCLC é diferencial)",
+          "Experiência em atendimento materno-infantil",
+        ],
+      },
+      {
+        titulo: "Instrutor(a) para treinamentos em instituições de saúde",
+        tipo: "B2B", local: "Cariri e região", status: "Aberta", aberta: true,
+        resumo: "Conduzir treinamentos in company para equipes de enfermagem e cuidadores em hospitais, ILPIs e casas de repouso: protocolos de cuidado, segurança do paciente e humanização.",
+        reqs: [
+          "Enfermeiro(a) com registro ativo no COREN",
+          "Especialização em área correlata (educação continuada, segurança do paciente, gerontologia)",
+          "Experiência em capacitação de equipes",
+          "Disponibilidade para deslocamento na região",
+        ],
+      },
+    ];
+
+    const vagas = raw.map((v, i) => ({
+      titulo: v.titulo, tipo: v.tipo, local: v.local, status: v.status, resumo: v.resumo,
+      reqs: v.reqs.map((t) => ({ txt: t })),
+      toggle: () => this.setState((s) => ({ open: s.open === i ? null : i })),
+      iconColor: open === i ? "#fff" : "#1C6CA6",
+      iconWrap: {
+        flex: "none", width: "48px", height: "48px", borderRadius: "14px",
+        display: "flex", alignItems: "center", justifyContent: "center",
+        background: open === i ? "#1C6CA6" : "#EAF1F8",
+        transition: "background .28s, transform .28s",
+        transform: open === i ? "scale(1.05)" : "none",
+      },
+      badgeStyle: {
+        flex: "none", fontSize: "11.5px", fontWeight: 600, padding: "6px 13px", borderRadius: "20px",
+        background: v.aberta ? "#1C6CA6" : "#EAF1F8",
+        color: v.aberta ? "#fff" : "#1C6CA6",
+      },
+      plusStyle: {
+        color: "#1C6CA6", fontSize: "26px", flex: "none", lineHeight: 1,
+        transition: "transform .3s cubic-bezier(.22,.9,.24,1)",
+        transform: open === i ? "rotate(45deg)" : "rotate(0deg)",
+      },
+      bodyStyle: { display: open === i ? "block" : "none" },
+    }));
+
+    return {
+      vagas,
+      enviado: this.state.enviado,
+      naoEnviado: !this.state.enviado,
+      enviar: () => this.setState({ enviado: true }),
+      inputStyle: field,
+      textareaStyle: Object.assign({}, field, { resize: "vertical", lineHeight: 1.55, fontSize: "14.5px" }),
+      btnStyle: {
+        width: "100%", marginTop: "4px", padding: "16px", fontSize: "16px", fontWeight: 600,
+        color: "#fff", background: "#1C6CA6", border: "none", borderRadius: "13px", cursor: "pointer",
+        boxShadow: "0 14px 30px rgba(28,108,166,0.26)", fontFamily: "'Equitan Sans',sans-serif",
+        transition: "background .2s, transform .2s",
+      },
+    };
+  }
+}
+</script>
+</body>
+</html>
