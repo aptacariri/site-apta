@@ -104,6 +104,7 @@ a{text-decoration:none;color:inherit;}
       <div style="position:absolute;inset:0;background:linear-gradient(90deg,rgba(8,19,38,0.92) 0%,rgba(8,19,38,0.72) 30%,rgba(9,26,50,0.3) 46%,transparent 58%);"></div>
       <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(8,19,38,0.55) 0%,transparent 24%,transparent 72%,rgba(8,19,38,0.6) 100%);"></div>
     </div>
+    <div id="heroGlow" style="position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity .45s ease;background:radial-gradient(260px circle at var(--gx,50%) var(--gy,50%),rgba(255,255,255,0.12),rgba(255,255,255,0.05) 34%,transparent 64%);-webkit-mask-image:linear-gradient(90deg,#000 40%,rgba(0,0,0,0.35) 56%,transparent 66%);mask-image:linear-gradient(90deg,#000 40%,rgba(0,0,0,0.35) 56%,transparent 66%);z-index:1;"></div>
     <svg viewBox="0 0 133.87 113.94" style="position:absolute;width:360px;left:-90px;bottom:-40px;opacity:0.05;" fill="none" stroke="#1C6CA6" stroke-width="1.5"><path d="M122.15,94.14l-27.94.48c-12.04.21-21.96,8.3-27.41,19.32-13-23.59-31.93-19.36-55.48-19.87C5.99,92.74,0,89.3,0,83.16V10.4C.01,5.76,5.38,2.01,8.86.21l31.74.39c12.24.15,21.92,8.92,25.98,19.98C76.27-3.81,98.19.13,122.95.38c5.16.05,10.91,5.47,10.91,10.89v70.96c.01,6.42-5.58,10.4-11.72,11.9Z"/></svg>
     <div style="max-width:1180px;margin:0 auto;padding:clamp(28px,3.4vw,44px) 40px;display:flex;gap:54px;align-items:center;flex-wrap:wrap;position:relative;width:100%;">
       <div data-rise="1" style="flex:1;min-width:300px;max-width:470px;">
@@ -561,6 +562,21 @@ class Component extends DCLogic {
     };
   }
 }
+</script>
+<script>
+(function(){
+  var hero = document.getElementById('topo');
+  var glow = document.getElementById('heroGlow');
+  if(!hero || !glow) return;
+  if(window.matchMedia && window.matchMedia('(hover: none)').matches) return;
+  hero.addEventListener('mousemove', function(e){
+    var r = hero.getBoundingClientRect();
+    glow.style.setProperty('--gx', (e.clientX - r.left) + 'px');
+    glow.style.setProperty('--gy', (e.clientY - r.top) + 'px');
+    glow.style.opacity = '1';
+  });
+  hero.addEventListener('mouseleave', function(){ glow.style.opacity = '0'; });
+})();
 </script>
 </body>
 </html>
