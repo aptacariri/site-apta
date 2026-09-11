@@ -55,6 +55,22 @@ a{text-decoration:none;color:inherit;}
 .js-reveal [data-soft]{opacity:0}
 [data-soft].in{opacity:1;animation:softIn .8s cubic-bezier(.22,.9,.24,1) forwards}
 @media (prefers-reduced-motion:reduce){[data-rise],[data-soft]{opacity:1!important;animation:none!important}}
+/* ===== MENU HAMBÚRGUER (MOBILE) ===== */
+.nav-burger{display:none;}
+.nav-check{position:absolute;opacity:0;width:0;height:0;pointer-events:none;}
+@media (max-width:860px){
+  .nav-inner{padding:13px 20px!important;position:relative;flex-wrap:nowrap!important;}
+  .nav-burger{display:inline-flex;align-items:center;justify-content:center;width:46px;height:46px;border-radius:12px;border:1px solid rgba(10,26,50,0.14);color:#0A1A32;cursor:pointer;background:#fff;flex:none;}
+  .nav-burger svg{width:23px;height:23px;display:block;}
+  .nav-burger .ic-close{display:none;}
+  .nav-check:checked ~ .nav-burger .ic-open{display:none;}
+  .nav-check:checked ~ .nav-burger .ic-close{display:block;}
+  .nav-check:checked ~ .nav-burger{background:#EEF4FA;}
+  .nav-links{display:none!important;position:absolute;top:100%;left:0;right:0;flex-direction:column!important;align-items:stretch!important;gap:0!important;background:#fff;border-top:1px solid rgba(10,26,50,0.08);box-shadow:0 22px 44px rgba(10,26,50,0.16);padding:6px 20px 18px!important;}
+  .nav-check:checked ~ .nav-links{display:flex!important;}
+  .nav-links a{padding:15px 2px;border-bottom:1px solid rgba(10,26,50,0.06);font-size:16px;}
+  .nav-links a[href="inscricao.html"]{margin-top:12px;text-align:center;border-bottom:none;padding:14px!important;}
+}
 </style>
 </helmet>
 
@@ -70,9 +86,14 @@ a{text-decoration:none;color:inherit;}
 
   <!-- ===== NAV ===== -->
   <nav style="position:sticky;top:0;z-index:50;background:rgba(255,255,255,0.92);backdrop-filter:blur(10px);border-bottom:1px solid rgba(10,26,50,0.08);">
-    <div style="max-width:1180px;margin:0 auto;padding:16px 40px;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;">
+    <div class="nav-inner" style="max-width:1180px;margin:0 auto;padding:16px 40px;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;">
       <a href="#topo"><dc-import name="AptaLogo" variant="full" color="#0A1A32" hint-size="128px,34px" style="width:128px"></dc-import></a>
-      <div style="display:flex;align-items:center;gap:28px;flex-wrap:wrap;">
+      <input type="checkbox" id="navToggle" class="nav-check" aria-hidden="true">
+      <label for="navToggle" class="nav-burger" aria-label="Abrir menu">
+        <svg class="ic-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        <svg class="ic-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </label>
+      <div class="nav-links" style="display:flex;align-items:center;gap:28px;flex-wrap:wrap;">
         <a href="#cursos" style="font-size:14.5px;color:#36475C;font-weight:500;transition:color .2s;" style-hover="color:#1C6CA6">Cursos</a>
         <a href="curso-cuidador.html" style="font-size:14.5px;color:#36475C;font-weight:500;transition:color .2s;" style-hover="color:#1C6CA6">Curso de Cuidador</a>
         <a href="#metodologia" style="font-size:14.5px;color:#36475C;font-weight:500;" style-hover="color:#1C6CA6">Metodologia</a>
@@ -576,6 +597,13 @@ class Component extends DCLogic {
     glow.style.opacity = '1';
   });
   hero.addEventListener('mouseleave', function(){ glow.style.opacity = '0'; });
+})();
+(function(){
+  var t = document.getElementById('navToggle');
+  if(!t) return;
+  document.querySelectorAll('.nav-links a').forEach(function(a){
+    a.addEventListener('click', function(){ t.checked = false; });
+  });
 })();
 </script>
 </body>
