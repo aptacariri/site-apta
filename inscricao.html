@@ -97,11 +97,11 @@ select{appearance:none;-webkit-appearance:none;}
             <div style="font-size:16px;font-weight:700;color:#fff;margin-top:4px;">Até 6x sem juros</div>
             <div style="font-size:12px;color:#8FA2B8;margin-top:2px;">6x de R$ 66,67 no cartão</div>
           </div>
-          <span style="font-size:20px;color:#A8D8F2;">→</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="#A8D8F2" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="width:19px;height:19px;flex:none;"><path d="M5 12h13M13 6l6 6-6 6"/></svg>
         </a>
       </div>
 
-      <a href="https://wa.me/558881828291" target="_blank" style="font-size:14px;color:#A8D8F2;margin-top:22px;display:flex;align-items:center;gap:7px;">Falar no WhatsApp <span style="font-size:15px;">→</span></a>
+      <a href="https://wa.me/558881828291" target="_blank" style="font-size:14px;color:#A8D8F2;margin-top:22px;display:flex;align-items:center;gap:7px;">Falar no WhatsApp <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;flex:none;"><path d="M5 12h13M13 6l6 6-6 6"/></svg></a>
       <a href="index.html" style="font-size:14px;color:#8FA2B8;margin-top:14px;">Voltar para a página inicial</a>
     </section>
   </sc-if>
@@ -111,7 +111,7 @@ select{appearance:none;-webkit-appearance:none;}
     <section style="padding:8px 28px 56px;">
       <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;"><span style="width:28px;height:1px;background:#A8D8F2;"></span><span style="font-size:11px;letter-spacing:0.24em;color:#A8D8F2;font-weight:600;">INSCRIÇÃO · CURSO DE CUIDADOR</span></div>
       <h1 style="font-weight:700;font-size:clamp(30px,8.5vw,40px);line-height:1.03;color:#fff;letter-spacing:-0.6px;">Garanta sua <span style="font-family:'TT Lakes Neue';font-style:italic;font-weight:300;color:#A8D8F2;">vaga</span></h1>
-      <p style="font-size:15px;color:#B9C6D6;line-height:1.6;margin-top:14px;font-weight:300;">Preencha seus dados abaixo. É rápido — depois a gente confirma tudo com você pelo WhatsApp. Vagas limitadas (turma reduzida).</p>
+      <p style="font-size:15px;color:#B9C6D6;line-height:1.6;margin-top:14px;font-weight:300;">Preencha seus dados abaixo. É rápido, depois a gente confirma tudo com você pelo WhatsApp. Vagas limitadas (turma reduzida).</p>
 
       <div style="background:#0E2240;border:1px solid rgba(168,216,242,0.14);border-radius:16px;padding:22px;margin-top:22px;">
         <div style="font-size:11px;letter-spacing:0.18em;color:#A8D8F2;font-weight:600;">TURMA 01 · OUTUBRO 2026</div>
@@ -183,7 +183,7 @@ select{appearance:none;-webkit-appearance:none;}
           <div style="position:relative;">
             <select value="{{ exp }}" onChange="{{ onExp }}" style="width:100%;background:#0E2240;border:1px solid rgba(168,216,242,0.16);border-radius:13px;padding:15px 16px;font-size:15px;color:#E8EEF4;font-family:'Equitan Sans';cursor:pointer;transition:.15s;">
               <option value="" style="background:#0E2240;color:#8FA2B8;">Selecione uma opção</option>
-              <option value="Nenhuma" style="background:#0E2240;">Nenhuma — quero começar</option>
+              <option value="Nenhuma" style="background:#0E2240;">Nenhuma, quero começar</option>
               <option value="Cuido em casa" style="background:#0E2240;">Já cuido de alguém em casa</option>
               <option value="Trabalho na área" style="background:#0E2240;">Já trabalho na área</option>
             </select>
@@ -199,7 +199,7 @@ select{appearance:none;-webkit-appearance:none;}
           <div style="background:rgba(224,140,140,0.1);border:1px solid rgba(224,140,140,0.35);border-radius:13px;padding:13px 16px;font-size:13.5px;color:#E8B0B0;">Preencha todos os campos marcados com <strong style="font-weight:600;">*</strong> (usados para gerar seu contrato) para continuar.</div>
         </sc-if>
 
-        <button onClick="{{ submit }}" style="background:#A8D8F2;color:#0A1A32;font-weight:600;font-size:16px;padding:18px;border-radius:14px;border:none;cursor:pointer;font-family:'Equitan Sans';display:flex;align-items:center;justify-content:center;gap:8px;margin-top:6px;box-shadow:0 14px 34px rgba(95,168,216,0.22);">Enviar inscrição <span style="font-size:18px;">→</span></button>
+        <button onClick="{{ submit }}" style="background:#A8D8F2;color:#0A1A32;font-weight:600;font-size:16px;padding:18px;border-radius:14px;border:none;cursor:pointer;font-family:'Equitan Sans';display:flex;align-items:center;justify-content:center;gap:8px;margin-top:6px;box-shadow:0 14px 34px rgba(95,168,216,0.22);">Enviar inscrição <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px;flex:none;"><path d="M5 12h13M13 6l6 6-6 6"/></svg></button>
         <p style="font-size:12px;color:#5C6F86;text-align:center;line-height:1.5;">Ao enviar, você concorda em ser contatado pela Apta pelos canais informados.</p>
       </div>
     </section>
@@ -297,12 +297,26 @@ class Component extends DCLogic {
         if (typeof window !== "undefined") {
           window.scrollTo({ top: 0 });
           try {
+            const fallbackWhats = () => {
+              const l = [
+                "*Nova inscrição — Curso de Cuidador*", "",
+                "Nome: " + registro.nome,
+                "WhatsApp: " + registro.whatsapp,
+                "E-mail: " + registro.email,
+                "CPF: " + registro.cpf + " · RG: " + registro.rg,
+                "Nascimento: " + registro.nascimento,
+                "Endereço: " + registro.endereco + ", " + registro.bairro + ", " + registro.cidade + " - " + registro.estado + ", CEP " + registro.cep,
+                "Experiência: " + (registro.experiencia || "-"),
+                "Mensagem: " + (registro.mensagem || "-"),
+              ];
+              window.open("https://wa.me/558881828291?text=" + encodeURIComponent(l.join("\n")), "_blank");
+            };
             if (window.sb) {
               window.sb.from("alunos").insert(registro).then(({ error }) => {
-                if (error) console.error("Erro ao salvar inscrição:", error);
-              });
+                if (error) { console.error("Erro ao salvar inscrição:", error); fallbackWhats(); }
+              }).catch(() => fallbackWhats());
             } else {
-              console.error("Supabase não carregado.");
+              fallbackWhats();
             }
           } catch (e) { console.error(e); }
         }
