@@ -71,6 +71,21 @@ a{text-decoration:none;color:inherit;}
   .nav-links a{padding:15px 2px;border-bottom:1px solid rgba(10,26,50,0.06);font-size:16px;}
   .nav-links a[href="inscricao.html"]{margin-top:12px;text-align:center;border-bottom:none;padding:14px!important;}
 }
+/* ===== AJUSTES GERAIS DE MOBILE (evita texto/caixas vazando) ===== */
+@media (max-width:640px){
+  [style*="max-width:1180px"]{padding-left:20px!important;padding-right:20px!important;}
+  [style*="min-width:300px"],[style*="min-width:320px"],[style*="min-width:340px"],[style*="min-width:290px"],[style*="min-width:280px"],[style*="min-width:260px"],[style*="min-width:240px"]{min-width:0!important;}
+}
+/* Hero: foto de fundo no desktop, foto centralizada no celular */
+@media (max-width:760px){
+  .hero-bg{display:none!important;}
+  .hero-mobile{display:block!important;}
+  #topo{min-height:0!important;}
+}
+/* Barra de aviso: versão curta no celular */
+@media (max-width:640px){
+  .ann-long,.ann-detail{display:none!important;}
+}
 </style>
 </helmet>
 
@@ -79,7 +94,7 @@ a{text-decoration:none;color:inherit;}
   <!-- ===== ANNOUNCEMENT BAR ===== -->
   <div style="background:#081326;border-bottom:1px solid rgba(168,216,242,0.12);">
     <div style="max-width:1180px;margin:0 auto;padding:11px 40px;display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap;">
-      <span style="display:inline-flex;align-items:center;gap:8px;font-size:12px;letter-spacing:0.04em;color:#CDE6F7;"><span style="width:7px;height:7px;border-radius:50%;background:#A8D8F2;animation:pulse 2.4s ease-in-out infinite;flex:none;"></span><strong style="font-weight:600;color:#fff;">Turma de lançamento · Out–Nov 2026</strong> — vagas limitadas e valor promocional da 1ª turma</span>
+      <span style="display:inline-flex;align-items:center;gap:8px;font-size:12px;letter-spacing:0.04em;color:#CDE6F7;"><span style="width:7px;height:7px;border-radius:50%;background:#A8D8F2;animation:pulse 2.4s ease-in-out infinite;flex:none;"></span><strong style="font-weight:600;color:#fff;">Turma <span class="ann-long">de lançamento · </span>Out–Nov 2026</strong><span class="ann-detail"> — vagas limitadas e valor promocional da 1ª turma</span></span>
       <a href="inscricao.html" style="font-size:12px;font-weight:600;color:#A8D8F2;display:inline-flex;align-items:center;gap:6px;">Inscreva-se <span style="font-size:14px;">→</span></a>
     </div>
   </div>
@@ -106,7 +121,7 @@ a{text-decoration:none;color:inherit;}
 
   <!-- ===== HERO ===== -->
   <section id="topo" style="background:radial-gradient(120% 120% at 78% 40%,#123B6B 0%,#0C2A4E 40%,#081326 100%);position:relative;overflow:hidden;min-height:clamp(460px,38vw,545px);display:flex;align-items:center;">
-    <div style="position:absolute;inset:0;">
+    <div class="hero-bg" style="position:absolute;inset:0;">
       <div style="position:absolute;inset:0;overflow:hidden;">
         <img src="uploads/magnific_melhorar_p8uEgjBehw.png" alt="Enfermeiras Rosa Kethllyn e Géssica Brito, instrutoras da Apta" style="width:100%;height:100%;object-fit:contain;object-position:right bottom;display:block;mask-image:linear-gradient(90deg,transparent 0%,rgba(0,0,0,0.06) 18%,rgba(0,0,0,0.25) 34%,rgba(0,0,0,0.6) 50%,rgba(0,0,0,0.9) 66%,#000 80%);-webkit-mask-image:linear-gradient(90deg,transparent 0%,rgba(0,0,0,0.06) 18%,rgba(0,0,0,0.25) 34%,rgba(0,0,0,0.6) 50%,rgba(0,0,0,0.9) 66%,#000 80%);">
         <div style="position:absolute;right:16%;top:63%;width:clamp(96px,8.6vw,132px);aspect-ratio:1;pointer-events:none;">
@@ -150,6 +165,22 @@ a{text-decoration:none;color:inherit;}
         <div style="display:inline-flex;align-items:center;gap:9px;margin-top:26px;background:rgba(8,19,38,0.5);border:1px solid rgba(168,216,242,0.28);backdrop-filter:blur(6px);padding:9px 16px;border-radius:30px;">
           <span style="width:7px;height:7px;border-radius:50%;background:#A8D8F2;animation:pulse 2.4s ease-in-out infinite;flex:none;"></span>
           <span style="font-size:11.5px;letter-spacing:0.16em;color:#EAF3FB;font-weight:600;">TURMA DE CUIDADOR ABERTA · OUT–NOV 2026</span>
+        </div>
+
+        <div class="hero-mobile" style="display:none;margin-top:32px;position:relative;">
+          <img src="assets/instrutoras.jpg" alt="Rosa Kethllyn e Géssica Brito, enfermeiras instrutoras da Apta" style="width:100%;display:block;border-radius:18px;">
+          <div style="position:absolute;right:9%;bottom:15%;width:33%;max-width:150px;aspect-ratio:1;pointer-events:none;">
+            <div style="position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle at 38% 32%,rgba(12,42,78,0.95),rgba(8,19,38,0.92) 68%);border:1px solid rgba(168,216,242,0.4);box-shadow:0 16px 36px rgba(0,0,0,0.5);"></div>
+            <svg viewBox="0 0 100 100" style="position:absolute;inset:0;width:100%;height:100%;animation:spin 18s linear infinite;">
+              <defs><path id="aptaRingM" d="M50,50 m-37,0 a37,37 0 1,1 74,0 a37,37 0 1,1 -74,0" fill="none"></path></defs>
+              <text fill="#A8D8F2" font-family="Equitan Sans, sans-serif" font-size="7.2" font-weight="600" letter-spacing="1.7">
+                <textPath href="#aptaRingM" startOffset="0%">ASSESSORIA E TREINAMENTOS · EXCELÊNCIA EM FORMAÇÃO ·&#160;</textPath>
+              </text>
+            </svg>
+            <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;">
+              <img src="assets/apta-logo-full.svg" alt="" style="width:46%;display:block;filter:brightness(0) invert(1);">
+            </div>
+          </div>
         </div>
       </div>
 

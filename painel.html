@@ -66,6 +66,17 @@
   .datebtns{display:flex;gap:6px;flex-wrap:wrap;margin:2px 0 6px;}
   .datebtn{background:rgba(168,216,242,.1);border:1px solid rgba(168,216,242,.2);color:#B9C6D6;font-size:12px;padding:6px 11px;border-radius:8px;cursor:pointer;font-family:inherit;}
   .datebtn.on{background:#A8D8F2;color:#0A1A32;border-color:#A8D8F2;font-weight:600;}
+  @media (max-width:560px){
+    .wrap{padding:16px 12px 54px;}
+    .top{margin-bottom:16px;}
+    .top h1{font-size:18px;}
+    .filters .search{min-width:0;}
+    .filters select{min-width:0;flex:1;}
+    .card{padding:20px;}
+    .tab{padding:9px 15px;font-size:13.5px;flex:1;text-align:center;}
+    .stats{grid-template-columns:repeat(2,1fr);}
+    th,td{padding:10px 11px;}
+  }
 </style>
 </head>
 <body>
@@ -123,7 +134,8 @@
   <div id="tabFreq" hidden>
     <div class="filters">
       <select id="freqCurso"></select>
-      <input type="date" id="freqData" class="mini" style="min-width:170px;">
+      <input type="date" id="freqData" class="mini" style="min-width:150px;">
+      <button class="ghost" id="addDataBtn">+ Adicionar data</button>
     </div>
     <div class="datebtns" id="freqDatas"></div>
     <div class="sub" id="freqInfo" style="color:#8FA2B8;font-size:13px;margin:8px 0 12px;"></div>
@@ -426,11 +438,25 @@ function switchTab(tab){
 }
 
 function setFreqData(d){ $("freqData").value = d; renderFrequencia(); }
+function getDatas(){ try{ const v=localStorage.getItem("apta_datas_freq"); if(v) return JSON.parse(v); }catch(e){} return CURSO_DATAS.slice(); }
+function saveDatas(a){ try{ localStorage.setItem("apta_datas_freq", JSON.stringify(a)); }catch(e){} }
+function addData(){
+  const d = $("freqData").value;
+  if(!d){ alert("Escolha uma data no calendário primeiro."); return; }
+  const arr = getDatas();
+  if(!arr.includes(d)){ arr.push(d); arr.sort(); saveDatas(arr); }
+  renderFrequencia();
+}
+function removeData(d){
+  if(!confirm("Remover a data "+fmtDateBR(d)+" da lista de botões?\n(As presenças já marcadas NÃO são apagadas.)")) return;
+  saveDatas(getDatas().filter(x=>x!==d));
+  renderFrequencia();
+}
 
 function renderFrequencia(){
   const curso = $("freqCurso").value;
   const data = $("freqData").value;
-  $("freqDatas").innerHTML = CURSO_DATAS.map(d=>`<button class="datebtn ${d===data?"on":""}" onclick="setFreqData('${d}')">${fmtDateBR(d)}</button>`).join("");
+  $("freqDatas").innerHTML = getDatas().map(d=>`<span class="datebtn ${d===data?"on":""}" style="display:inline-flex;align-items:center;gap:7px;"><span onclick="setFreqData('${d}')" style="cursor:pointer;">${fmtDateBR(d)}</span><span onclick="removeData('${d}')" title="Remover data" style="cursor:pointer;font-weight:700;opacity:.55;font-size:14px;line-height:1;">×</span></span>`).join("");
   const list = alunos.filter(a => (a.curso||CURSOS[0]) === curso);
   $("freqEmpty").hidden = list.length > 0;
   if (!data){ $("freqInfo").textContent = "Selecione uma data acima para marcar presença."; $("freqRows").innerHTML = ""; return; }
@@ -462,6 +488,7 @@ $("search").oninput = render;
 $("cursoFilter").onchange = render;
 $("freqCurso").onchange = renderFrequencia;
 $("freqData").onchange = renderFrequencia;
+$("addDataBtn").onclick = addData;
 $("tabBtnAlunos").onclick = ()=> switchTab("alunos");
 $("tabBtnFreq").onclick = ()=> switchTab("freq");
 $("mClose").onclick = ()=> $("modal").classList.remove("open");
