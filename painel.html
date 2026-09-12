@@ -56,7 +56,8 @@
   input.mini{padding:9px 12px;font-size:13.5px;border-radius:10px;width:auto;}
   /* Tabela */
   .tablewrap{overflow-x:auto;background:var(--panel);border:1px solid var(--line);border-radius:18px;box-shadow:0 18px 42px rgba(0,0,0,.24);}
-  table{width:100%;border-collapse:collapse;font-size:13.5px;min-width:920px;}
+  table{width:100%;border-collapse:collapse;font-size:13.5px;}
+  #freqRows td.name{white-space:normal;}
   th,td{text-align:left;padding:14px 16px;border-bottom:1px solid rgba(168,216,242,.07);white-space:nowrap;vertical-align:middle;}
   thead th{font-size:10.5px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);font-weight:700;background:rgba(255,255,255,.015);}
   tbody tr{transition:background .12s;}
@@ -84,6 +85,30 @@
   .datebtns{display:flex;gap:7px;flex-wrap:wrap;margin:2px 0 8px;}
   .datebtn{background:rgba(168,216,242,.09);border:1px solid var(--line2);color:#B9C6D6;font-size:12px;padding:7px 12px;border-radius:9px;cursor:pointer;font-family:inherit;}
   .datebtn.on{background:var(--accent);color:#0A1A32;border-color:var(--accent);font-weight:600;}
+  /* Cursos (nível 1) */
+  .section-title{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;font-weight:700;margin:2px 0 14px;}
+  .course-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px;}
+  .course-card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:20px 22px;cursor:pointer;display:flex;align-items:center;gap:16px;transition:.15s;}
+  .course-card:hover{border-color:var(--accent);transform:translateY(-2px);background:#122a4d;}
+  .cc-icon{width:48px;height:48px;border-radius:13px;background:rgba(168,216,242,.12);display:flex;align-items:center;justify-content:center;flex:none;color:var(--accent);}
+  .cc-body{flex:1;min-width:0;}
+  .cc-name{font-size:15.5px;font-weight:700;color:#fff;line-height:1.25;}
+  .cc-count{font-size:12.5px;color:var(--muted);margin-top:4px;}
+  .cc-arrow{color:var(--accent);flex:none;}
+  /* Alunos em cards (nível 2) */
+  .back-btn{background:none;border:none;color:var(--accent);font-size:13.5px;font-weight:600;cursor:pointer;font-family:inherit;padding:0;margin-bottom:16px;display:inline-flex;align-items:center;gap:7px;}
+  .students-head{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:16px;}
+  .students-head h2{font-size:18px;font-weight:700;}
+  .students-head .search{max-width:320px;}
+  .acard{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin-bottom:12px;transition:border-color .12s;}
+  .acard:hover{border-color:var(--line2);}
+  .acard-top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap;}
+  .acard-name{font-size:16px;font-weight:700;color:#fff;}
+  .acard-meta{font-size:13px;color:var(--muted);margin-top:3px;}
+  .acard-actions{display:flex;gap:14px;flex:none;}
+  .acard-status{display:flex;gap:12px;flex-wrap:wrap;margin-top:15px;}
+  .acard-status .fld{display:flex;flex-direction:column;gap:6px;}
+  .acard-status .fld > span{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;font-weight:600;}
   @media (max-width:560px){
     .wrap{padding:16px 12px 54px;}
     .top{margin-bottom:18px;padding-bottom:16px;}
@@ -138,22 +163,21 @@
 
   <div id="tabAlunos">
     <div class="stats" id="stats"></div>
-    <div class="filters">
-      <input id="search" class="search" placeholder="Buscar por nome, CPF, cidade, WhatsApp...">
-      <select id="cursoFilter"></select>
+
+    <div id="coursesView">
+      <div class="section-title">Selecione um curso para ver os alunos</div>
+      <div class="course-grid" id="courseGrid"></div>
     </div>
-    <div class="tablewrap">
-      <table>
-        <thead>
-          <tr>
-            <th>Data</th><th>Nome</th><th>Curso</th><th>WhatsApp</th><th>Cidade</th>
-            <th>Inscrição</th><th>Pagamento</th><th>Situação</th><th></th>
-          </tr>
-        </thead>
-        <tbody id="rows"></tbody>
-      </table>
+
+    <div id="studentsView" hidden>
+      <button class="back-btn" id="backCursos"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;"><path d="M19 12H5M11 18l-6-6 6-6"/></svg> Voltar aos cursos</button>
+      <div class="students-head">
+        <h2 id="curTitle"></h2>
+        <input id="search" class="search" placeholder="Buscar aluno por nome, CPF, cidade...">
+      </div>
+      <div id="alunoCards"></div>
+      <div id="empty" class="empty" hidden>Nenhum aluno encontrado.</div>
     </div>
-    <div id="empty" class="empty" hidden>Nenhuma inscrição ainda. Assim que alguém se inscrever pelo site, aparece aqui.</div>
   </div>
 
   <div id="tabFreq" hidden>
@@ -211,11 +235,10 @@ function fmtDateBR(d){ const p=(d||"").split("-"); return p.length===3 ? p[2]+"/
 function courseList(){ const s=new Set(CURSOS); alunos.forEach(a=>{ if(a.curso) s.add(a.curso); }); return [...s]; }
 function populateCursos(){
   const cs = courseList();
-  const fSel = $("cursoFilter").value;
-  $("cursoFilter").innerHTML = `<option value="">Todos os cursos</option>` + cs.map(c=>`<option ${c===fSel?"selected":""}>${esc(c)}</option>`).join("");
   const qSel = $("freqCurso").value || cs[0];
   $("freqCurso").innerHTML = cs.map(c=>`<option ${c===qSel?"selected":""}>${esc(c)}</option>`).join("");
 }
+function alunosDoCurso(curso){ return alunos.filter(a => (a.curso||CURSOS[0]) === curso); }
 
 function fmtData(iso){ if(!iso) return "-"; const d=new Date(iso); return d.toLocaleDateString("pt-BR")+" "+d.toLocaleTimeString("pt-BR",{hour:"2-digit",minute:"2-digit"}); }
 function onlyDigits(s){ return (s||"").replace(/\D/g,""); }
@@ -255,26 +278,72 @@ async function load(){
   if (currentTab === "freq") renderFrequencia();
 }
 
-function render(){
-  const q = onlyDigits($("search").value) ? onlyDigits($("search").value) : $("search").value.toLowerCase().trim();
-  const term = $("search").value.toLowerCase().trim();
-  const cursoF = $("cursoFilter").value;
-  const list = alunos.filter(a => {
-    if (cursoF && (a.curso || CURSOS[0]) !== cursoF) return false;
-    if (!term) return true;
-    const hay = [a.nome,a.cidade,a.whatsapp,a.cpf,a.email,a.bairro].map(x=>(x||"").toLowerCase()).join(" ");
-    const hayDigits = onlyDigits(a.cpf) + " " + onlyDigits(a.whatsapp);
-    return hay.includes(term) || hayDigits.includes(onlyDigits(term));
-  });
+let selectedCourse = null;
+function jsq(s){ return String(s).replace(/\\/g,"\\\\").replace(/'/g,"\\'"); }
 
+function render(){
   const pagos = alunos.filter(a=>a.status_pagamento==="Pago").length;
   const pend = alunos.filter(a=>a.status_pagamento==="Pendente").length;
   const conf = alunos.filter(a=>a.status_inscricao==="Confirmada").length;
   $("stats").innerHTML =
     stat(alunos.length,"Inscritos") + stat(conf,"Confirmados","blue") + stat(pagos,"Pagos","green") + stat(pend,"Pagamento pendente","amber");
 
+  if (selectedCourse === null || !courseList().includes(selectedCourse)) {
+    selectedCourse = null;
+    $("coursesView").hidden = false;
+    $("studentsView").hidden = true;
+    renderCourses();
+  } else {
+    $("coursesView").hidden = true;
+    $("studentsView").hidden = false;
+    renderStudents();
+  }
+}
+
+function renderCourses(){
+  $("courseGrid").innerHTML = courseList().map(c=>{
+    const n = alunosDoCurso(c).length;
+    return `<div class="course-card" onclick="openCourse('${jsq(c)}')">
+      <div class="cc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" style="width:24px;height:24px;"><path d="M22 10 12 5 2 10l10 5 10-5z"/><path d="M6 12v5c0 1 2.7 2.4 6 2.4s6-1.4 6-2.4v-5"/></svg></div>
+      <div class="cc-body"><div class="cc-name">${esc(c)}</div><div class="cc-count">${n} ${n===1?"aluno inscrito":"alunos inscritos"}</div></div>
+      <svg class="cc-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px;"><path d="M5 12h13M13 6l6 6-6 6"/></svg>
+    </div>`;
+  }).join("");
+}
+
+function openCourse(c){ selectedCourse = c; $("search").value = ""; render(); }
+function backToCourses(){ selectedCourse = null; render(); }
+
+function renderStudents(){
+  $("curTitle").textContent = selectedCourse;
+  const term = $("search").value.toLowerCase().trim();
+  const list = alunosDoCurso(selectedCourse).filter(a=>{
+    if(!term) return true;
+    const hay = [a.nome,a.cidade,a.whatsapp,a.cpf,a.email,a.bairro].map(x=>(x||"").toLowerCase()).join(" ");
+    const hayD = onlyDigits(a.cpf)+" "+onlyDigits(a.whatsapp);
+    return hay.includes(term) || hayD.includes(onlyDigits(term));
+  });
   $("empty").hidden = list.length > 0;
-  $("rows").innerHTML = list.map(rowHtml).join("");
+  $("alunoCards").innerHTML = list.map(alunoCard).join("");
+}
+
+function alunoCard(a){
+  const meta = [a.cidade, a.whatsapp].filter(x=>x && String(x).trim()).map(esc).join(" · ") || "-";
+  return `<div class="acard">
+    <div class="acard-top">
+      <div><div class="acard-name">${esc(a.nome)}</div><div class="acard-meta">${meta}</div></div>
+      <div class="acard-actions">
+        <button class="link" onclick="abrirWhatsapp('${a.id}')">WhatsApp</button>
+        <button class="link" onclick="gerarContrato('${a.id}')">Contrato</button>
+        <button class="link" onclick="openDetails('${a.id}')">Ver</button>
+      </div>
+    </div>
+    <div class="acard-status">
+      <div class="fld"><span>Inscrição</span>${sel(a.id,"status_inscricao",a.status_inscricao||"Nova",INSCRICAO)}</div>
+      <div class="fld"><span>Pagamento</span>${sel(a.id,"status_pagamento",a.status_pagamento||"Pendente",PAGAMENTO)}</div>
+      <div class="fld"><span>Situação</span>${sel(a.id,"situacao",a.situacao||"Cursando",SITUACAO)}</div>
+    </div>
+  </div>`;
 }
 function stat(n,l,cls){ return `<div class="stat ${cls||''}"><div class="n">${n}</div><div class="l">${l}</div></div>`; }
 
@@ -284,27 +353,6 @@ const STATUS_COLORS = {
   "Cursando":"#5fa8d8","Aprovado":"#5fd0a0","Reprovado":"#e88b8b",
 };
 
-function rowHtml(a){
-  const wa = onlyDigits(a.whatsapp);
-  const waLink = wa ? `<a href="https://wa.me/55${wa}" target="_blank">${esc(a.whatsapp)}</a>` : "-";
-  return `<tr>
-    <td class="muted">${fmtData(a.created_at)}</td>
-    <td class="name">${esc(a.nome)}</td>
-    <td>${sel(a.id,"curso",a.curso||CURSOS[0],CURSOS)}</td>
-    <td>${waLink}</td>
-    <td>${esc(a.cidade)||"-"}</td>
-    <td>${sel(a.id,"status_inscricao",a.status_inscricao||"Nova",INSCRICAO)}</td>
-    <td>${sel(a.id,"status_pagamento",a.status_pagamento||"Pendente",PAGAMENTO)}</td>
-    <td>${sel(a.id,"situacao",a.situacao||"Cursando",SITUACAO)}</td>
-    <td style="white-space:nowrap;">
-      <button class="link" onclick="abrirWhatsapp('${a.id}')" title="Abrir WhatsApp">WhatsApp</button>
-      <span class="muted"> · </span>
-      <button class="link" onclick="gerarContrato('${a.id}')" title="Gerar contrato">Contrato</button>
-      <span class="muted"> · </span>
-      <button class="link" onclick="openDetails('${a.id}')">Ver</button>
-    </td>
-  </tr>`;
-}
 function sel(id,field,val,opts){
   const all = opts.includes(val) ? opts : [val, ...opts];
   const c = STATUS_COLORS[val];
@@ -517,8 +565,8 @@ $("loginBtn").onclick = doLogin;
 $("password").addEventListener("keydown", e=>{ if(e.key==="Enter") doLogin(); });
 $("logoutBtn").onclick = async ()=>{ await sb.auth.signOut(); location.reload(); };
 $("refreshBtn").onclick = load;
-$("search").oninput = render;
-$("cursoFilter").onchange = render;
+$("search").oninput = renderStudents;
+$("backCursos").onclick = backToCourses;
 $("freqCurso").onchange = renderFrequencia;
 $("freqData").onchange = renderFrequencia;
 $("addDataBtn").onclick = addData;
