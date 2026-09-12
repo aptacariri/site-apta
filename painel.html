@@ -54,6 +54,18 @@
   .row{display:flex;justify-content:space-between;gap:14px;padding:9px 0;border-bottom:1px solid rgba(168,216,242,.09);font-size:13.5px;}
   .row .k{color:#8FA2B8;}.row .v{color:#EAF3FB;text-align:right;font-weight:500;word-break:break-word;}
   .danger{background:rgba(224,140,140,.14);border:1px solid rgba(224,140,140,.4);color:#E8B0B0;font-size:13px;padding:10px 14px;border-radius:10px;cursor:pointer;font-family:inherit;}
+  /* Tabs & filtros */
+  .tabs{display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap;}
+  .tab{background:rgba(168,216,242,.08);border:1px solid rgba(168,216,242,.16);color:#B9C6D6;font-size:13.5px;font-weight:600;padding:10px 18px;border-radius:11px;cursor:pointer;font-family:inherit;}
+  .tab.active{background:#A8D8F2;color:#0A1A32;border-color:#A8D8F2;}
+  .filters{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px;}
+  .filters .search{flex:1;min-width:200px;margin-bottom:0;}
+  .filters select{width:auto;min-width:190px;}
+  input.mini{padding:8px 10px;font-size:13.5px;border-radius:9px;width:auto;}
+  .chk{width:22px;height:22px;accent-color:#3FA7E0;cursor:pointer;}
+  .datebtns{display:flex;gap:6px;flex-wrap:wrap;margin:2px 0 6px;}
+  .datebtn{background:rgba(168,216,242,.1);border:1px solid rgba(168,216,242,.2);color:#B9C6D6;font-size:12px;padding:6px 11px;border-radius:8px;cursor:pointer;font-family:inherit;}
+  .datebtn.on{background:#A8D8F2;color:#0A1A32;border-color:#A8D8F2;font-weight:600;}
 </style>
 </head>
 <body>
@@ -83,22 +95,46 @@
     </div>
   </div>
 
-  <div class="stats" id="stats"></div>
-
-  <input id="search" class="search" placeholder="Buscar por nome, CPF, cidade, WhatsApp...">
-
-  <div class="tablewrap">
-    <table>
-      <thead>
-        <tr>
-          <th>Data</th><th>Nome</th><th>WhatsApp</th><th>Cidade</th>
-          <th>Inscrição</th><th>Pagamento</th><th></th>
-        </tr>
-      </thead>
-      <tbody id="rows"></tbody>
-    </table>
+  <div class="tabs">
+    <button class="tab active" id="tabBtnAlunos">Alunos</button>
+    <button class="tab" id="tabBtnFreq">Frequência</button>
   </div>
-  <div id="empty" class="empty" hidden>Nenhuma inscrição ainda. Assim que alguém se inscrever pelo site, aparece aqui.</div>
+
+  <div id="tabAlunos">
+    <div class="stats" id="stats"></div>
+    <div class="filters">
+      <input id="search" class="search" placeholder="Buscar por nome, CPF, cidade, WhatsApp...">
+      <select id="cursoFilter"></select>
+    </div>
+    <div class="tablewrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Data</th><th>Nome</th><th>Curso</th><th>WhatsApp</th><th>Cidade</th>
+            <th>Inscrição</th><th>Pagamento</th><th>Situação</th><th></th>
+          </tr>
+        </thead>
+        <tbody id="rows"></tbody>
+      </table>
+    </div>
+    <div id="empty" class="empty" hidden>Nenhuma inscrição ainda. Assim que alguém se inscrever pelo site, aparece aqui.</div>
+  </div>
+
+  <div id="tabFreq" hidden>
+    <div class="filters">
+      <select id="freqCurso"></select>
+      <input type="date" id="freqData" class="mini" style="min-width:170px;">
+    </div>
+    <div class="datebtns" id="freqDatas"></div>
+    <div class="sub" id="freqInfo" style="color:#8FA2B8;font-size:13px;margin:8px 0 12px;"></div>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Nome</th><th>Curso</th><th style="text-align:center;">Presente</th></tr></thead>
+        <tbody id="freqRows"></tbody>
+      </table>
+    </div>
+    <div id="freqEmpty" class="empty" hidden>Nenhum aluno neste curso ainda.</div>
+  </div>
 </div>
 
 <!-- MODAL DETALHES -->
@@ -129,6 +165,20 @@ let current = null;
 
 const INSCRICAO = ["Nova", "Confirmada", "Cancelada"];
 const PAGAMENTO = ["Pendente", "Pago", "Parcial", "Isento"];
+const SITUACAO = ["Cursando", "Aprovado", "Reprovado"];
+const CURSOS = ["Cuidador de Pessoa Idosa e Acamada"];
+const CURSO_DATAS = ["2026-10-10","2026-10-11","2026-10-17","2026-10-18","2026-10-31","2026-11-01","2026-11-07","2026-11-08"];
+let currentTab = "alunos";
+
+function fmtDateBR(d){ const p=(d||"").split("-"); return p.length===3 ? p[2]+"/"+p[1]+"/"+p[0].slice(2) : (d||""); }
+function courseList(){ const s=new Set(CURSOS); alunos.forEach(a=>{ if(a.curso) s.add(a.curso); }); return [...s]; }
+function populateCursos(){
+  const cs = courseList();
+  const fSel = $("cursoFilter").value;
+  $("cursoFilter").innerHTML = `<option value="">Todos os cursos</option>` + cs.map(c=>`<option ${c===fSel?"selected":""}>${esc(c)}</option>`).join("");
+  const qSel = $("freqCurso").value || cs[0];
+  $("freqCurso").innerHTML = cs.map(c=>`<option ${c===qSel?"selected":""}>${esc(c)}</option>`).join("");
+}
 
 function fmtData(iso){ if(!iso) return "-"; const d=new Date(iso); return d.toLocaleDateString("pt-BR")+" "+d.toLocaleTimeString("pt-BR",{hour:"2-digit",minute:"2-digit"}); }
 function onlyDigits(s){ return (s||"").replace(/\D/g,""); }
@@ -162,13 +212,18 @@ async function load(){
   const { data, error } = await sb.from("alunos").select("*").order("created_at", { ascending: false });
   if (error) { alert("Erro ao carregar: " + error.message); return; }
   alunos = data || [];
+  populateCursos();
+  if (!$("freqData").value) $("freqData").value = CURSO_DATAS[0];
   render();
+  if (currentTab === "freq") renderFrequencia();
 }
 
 function render(){
   const q = onlyDigits($("search").value) ? onlyDigits($("search").value) : $("search").value.toLowerCase().trim();
   const term = $("search").value.toLowerCase().trim();
+  const cursoF = $("cursoFilter").value;
   const list = alunos.filter(a => {
+    if (cursoF && (a.curso || CURSOS[0]) !== cursoF) return false;
     if (!term) return true;
     const hay = [a.nome,a.cidade,a.whatsapp,a.cpf,a.email,a.bairro].map(x=>(x||"").toLowerCase()).join(" ");
     const hayDigits = onlyDigits(a.cpf) + " " + onlyDigits(a.whatsapp);
@@ -192,10 +247,12 @@ function rowHtml(a){
   return `<tr>
     <td class="muted">${fmtData(a.created_at)}</td>
     <td class="name">${esc(a.nome)}</td>
+    <td>${sel(a.id,"curso",a.curso||CURSOS[0],CURSOS)}</td>
     <td>${waLink}</td>
     <td>${esc(a.cidade)||"-"}</td>
     <td>${sel(a.id,"status_inscricao",a.status_inscricao||"Nova",INSCRICAO)}</td>
     <td>${sel(a.id,"status_pagamento",a.status_pagamento||"Pendente",PAGAMENTO)}</td>
+    <td>${sel(a.id,"situacao",a.situacao||"Cursando",SITUACAO)}</td>
     <td style="white-space:nowrap;">
       <button class="link" onclick="abrirWhatsapp('${a.id}')" title="Abrir WhatsApp">WhatsApp</button>
       <span class="muted"> · </span>
@@ -206,8 +263,9 @@ function rowHtml(a){
   </tr>`;
 }
 function sel(id,field,val,opts){
+  const all = opts.includes(val) ? opts : [val, ...opts];
   return `<select class="mini" onchange="updateStatus('${id}','${field}',this.value)">` +
-    opts.map(o=>`<option ${o===val?"selected":""}>${o}</option>`).join("") + `</select>`;
+    all.map(o=>`<option ${o===val?"selected":""}>${esc(o)}</option>`).join("") + `</select>`;
 }
 
 async function updateStatus(id, field, value){
@@ -222,13 +280,24 @@ function openDetails(id){
   current = a;
   $("mNome").textContent = a.nome || "Aluno";
   const rows = [
+    ["Curso", a.curso||CURSOS[0]],
     ["WhatsApp", a.whatsapp],["E-mail", a.email],["CPF", a.cpf],["RG", a.rg],
     ["Nascimento", a.nascimento],["Endereço", a.endereco],["Bairro", a.bairro],
     ["Cidade / UF", (a.cidade||"")+" - "+(a.estado||"")],["CEP", a.cep],
     ["Experiência", a.experiencia],["Mensagem", a.mensagem],
     ["Inscrição em", fmtData(a.created_at)],
   ];
-  $("mBody").innerHTML = rows.map(([k,v])=>`<div class="row"><span class="k">${k}</span><span class="v">${esc(v)||"-"}</span></div>`).join("");
+  const pres = Object.keys(a.presencas||{}).filter(d=>(a.presencas||{})[d]).sort();
+  $("mBody").innerHTML = rows.map(([k,v])=>`<div class="row"><span class="k">${k}</span><span class="v">${esc(v)||"-"}</span></div>`).join("") + `
+    <div style="display:flex;gap:12px;margin-top:16px;">
+      <div style="flex:1;"><label style="margin-top:0;">Nota</label><input id="mNota" class="mini" style="width:100%;" value="${esc(a.nota||"")}" placeholder="Ex: 8,5"></div>
+      <div style="flex:1.3;"><label style="margin-top:0;">Situação</label><select id="mSituacao" style="width:100%;">${SITUACAO.map(s=>`<option ${s===(a.situacao||"Cursando")?"selected":""}>${s}</option>`).join("")}</select></div>
+    </div>
+    <div style="margin-top:14px;"><label style="margin-top:0;">Presenças (${pres.length})</label>
+      <div style="font-size:12.5px;color:#B9C6D6;line-height:1.7;">${pres.length ? pres.map(d=>fmtDateBR(d)).join(" · ") : "Nenhuma presença marcada ainda."}</div>
+    </div>`;
+  $("mNota").onchange = ()=> updateStatus(a.id,"nota",$("mNota").value);
+  $("mSituacao").onchange = ()=> updateStatus(a.id,"situacao",$("mSituacao").value);
   $("mContrato").onclick = ()=> gerarContrato(a.id);
   $("mWhats").onclick = ()=> abrirWhatsapp(a.id);
   $("modal").classList.add("open");
@@ -347,11 +416,54 @@ async function deleteCurrent(){
   $("modal").classList.remove("open"); current=null; render();
 }
 
+function switchTab(tab){
+  currentTab = tab;
+  $("tabAlunos").hidden = tab !== "alunos";
+  $("tabFreq").hidden = tab !== "freq";
+  $("tabBtnAlunos").classList.toggle("active", tab === "alunos");
+  $("tabBtnFreq").classList.toggle("active", tab === "freq");
+  if (tab === "freq") renderFrequencia();
+}
+
+function setFreqData(d){ $("freqData").value = d; renderFrequencia(); }
+
+function renderFrequencia(){
+  const curso = $("freqCurso").value;
+  const data = $("freqData").value;
+  $("freqDatas").innerHTML = CURSO_DATAS.map(d=>`<button class="datebtn ${d===data?"on":""}" onclick="setFreqData('${d}')">${fmtDateBR(d)}</button>`).join("");
+  const list = alunos.filter(a => (a.curso||CURSOS[0]) === curso);
+  $("freqEmpty").hidden = list.length > 0;
+  if (!data){ $("freqInfo").textContent = "Selecione uma data acima para marcar presença."; $("freqRows").innerHTML = ""; return; }
+  let pres = 0;
+  $("freqRows").innerHTML = list.map(a=>{
+    const on = !!((a.presencas||{})[data]);
+    if (on) pres++;
+    return `<tr><td class="name">${esc(a.nome)}</td><td class="muted">${esc(a.curso||CURSOS[0])}</td>
+      <td style="text-align:center;"><input type="checkbox" class="chk" ${on?"checked":""} onchange="togglePresenca('${a.id}','${data}',this.checked)"></td></tr>`;
+  }).join("");
+  $("freqInfo").innerHTML = `Data <strong style="color:#EAF3FB;">${fmtDateBR(data)}</strong> · Presentes: <strong style="color:#EAF3FB;">${pres}</strong> de ${list.length}`;
+}
+
+async function togglePresenca(id, date, checked){
+  const a = alunos.find(x=>x.id===id); if(!a) return;
+  const p = Object.assign({}, a.presencas || {});
+  if (checked) p[date] = true; else delete p[date];
+  const { error } = await sb.from("alunos").update({ presencas: p }).eq("id", id);
+  if (error) { alert("Erro ao salvar presença: " + error.message); return; }
+  a.presencas = p;
+  renderFrequencia();
+}
+
 $("loginBtn").onclick = doLogin;
 $("password").addEventListener("keydown", e=>{ if(e.key==="Enter") doLogin(); });
 $("logoutBtn").onclick = async ()=>{ await sb.auth.signOut(); location.reload(); };
 $("refreshBtn").onclick = load;
 $("search").oninput = render;
+$("cursoFilter").onchange = render;
+$("freqCurso").onchange = renderFrequencia;
+$("freqData").onchange = renderFrequencia;
+$("tabBtnAlunos").onclick = ()=> switchTab("alunos");
+$("tabBtnFreq").onclick = ()=> switchTab("freq");
 $("mClose").onclick = ()=> $("modal").classList.remove("open");
 $("mDelete").onclick = deleteCurrent;
 $("modal").onclick = (e)=>{ if(e.target===$("modal")) $("modal").classList.remove("open"); };
