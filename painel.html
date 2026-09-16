@@ -109,6 +109,17 @@
   .acard-status{display:flex;gap:12px;flex-wrap:wrap;margin-top:15px;}
   .acard-status .fld{display:flex;flex-direction:column;gap:6px;}
   .acard-status .fld > span{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;font-weight:600;}
+  /* Frequência em cards */
+  .fcard{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:15px 18px;margin-bottom:12px;}
+  .fcard-top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;}
+  .fcard-name{font-size:15.5px;font-weight:700;color:#fff;}
+  .fcard-total{font-size:12.5px;color:var(--muted);}
+  .fcard-total b{color:var(--ink);}
+  .fcard-times{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:13px;}
+  .fcard-times label{margin:0;display:flex;align-items:center;gap:8px;font-size:10.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;font-weight:600;}
+  .fcard-times input[type=time]{width:auto;padding:8px 10px;font-size:13.5px;color-scheme:dark;}
+  .fcard-day{font-size:13px;color:var(--accent);font-weight:600;}
+  .pct-pill{font-weight:700;}
   @media (max-width:560px){
     .wrap{padding:16px 12px 54px;}
     .top{margin-bottom:18px;padding-bottom:16px;}
@@ -187,13 +198,8 @@
       <button class="ghost" id="addDataBtn">+ Adicionar data</button>
     </div>
     <div class="datebtns" id="freqDatas"></div>
-    <div class="sub" id="freqInfo" style="color:#8FA2B8;font-size:13px;margin:8px 0 12px;"></div>
-    <div class="tablewrap">
-      <table>
-        <thead><tr><th>Nome</th><th>Curso</th><th style="text-align:center;">Presente</th></tr></thead>
-        <tbody id="freqRows"></tbody>
-      </table>
-    </div>
+    <div class="sub" id="freqInfo" style="color:#8FA2B8;font-size:13px;margin:8px 0 14px;"></div>
+    <div id="freqCards"></div>
     <div id="freqEmpty" class="empty" hidden>Nenhum aluno neste curso ainda.</div>
   </div>
 </div>
@@ -380,14 +386,16 @@ function openDetails(id){
     ["Experiência", a.experiencia],["Mensagem", a.mensagem],
     ["Inscrição em", fmtData(a.created_at)],
   ];
-  const pres = Object.keys(a.presencas||{}).filter(d=>(a.presencas||{})[d]).sort();
+  const pmap = a.presencas||{};
+  const dias = Object.keys(pmap).filter(d=>dayHours(pmap[d])>0).sort();
+  const totH = totalHoras(a), pctA = presencaPct(a);
   $("mBody").innerHTML = rows.map(([k,v])=>`<div class="row"><span class="k">${k}</span><span class="v">${esc(v)||"-"}</span></div>`).join("") + `
     <div style="display:flex;gap:12px;margin-top:16px;">
       <div style="flex:1;"><label style="margin-top:0;">Nota</label><input id="mNota" class="mini" style="width:100%;" value="${esc(a.nota||"")}" placeholder="Ex: 8,5"></div>
       <div style="flex:1.3;"><label style="margin-top:0;">Situação</label><select id="mSituacao" style="width:100%;">${SITUACAO.map(s=>`<option ${s===(a.situacao||"Cursando")?"selected":""}>${s}</option>`).join("")}</select></div>
     </div>
-    <div style="margin-top:14px;"><label style="margin-top:0;">Presenças (${pres.length})</label>
-      <div style="font-size:12.5px;color:#B9C6D6;line-height:1.7;">${pres.length ? pres.map(d=>fmtDateBR(d)).join(" · ") : "Nenhuma presença marcada ainda."}</div>
+    <div style="margin-top:14px;"><label style="margin-top:0;">Frequência</label>
+      <div style="font-size:13px;color:#B9C6D6;line-height:1.7;"><b style="color:#fff;">${fmtH(totH)}</b> de ${CARGA_TOTAL}h &nbsp;·&nbsp; <b style="color:${pctColor(pctA)};">${pctA}% de presença</b><br>${dias.length ? dias.map(d=>fmtDateBR(d)+" ("+fmtH(dayHours(pmap[d]))+")").join(" · ") : "Nenhuma presença registrada ainda."}</div>
     </div>`;
   $("mNota").onchange = ()=> updateStatus(a.id,"nota",$("mNota").value);
   $("mSituacao").onchange = ()=> updateStatus(a.id,"situacao",$("mSituacao").value);
@@ -534,29 +542,71 @@ function removeData(d){
   renderFrequencia();
 }
 
+const CARGA_TOTAL = 80; // carga horária total do curso (horas)
+function timeToMin(t){ const m=/^(\d{1,2}):(\d{2})$/.exec(t||""); return m ? (+m[1])*60 + (+m[2]) : null; }
+function dayHours(rec){
+  if (rec === true) return 10; // compat com marcação antiga (dia cheio)
+  if (rec && typeof rec === "object"){
+    const e = timeToMin(rec.e), s = timeToMin(rec.s);
+    if (e != null && s != null && s > e) return (s - e) / 60;
+  }
+  return 0;
+}
+function totalHoras(a){ const p = a.presencas||{}; return Object.keys(p).reduce((t,d)=> t + dayHours(p[d]), 0); }
+function presencaPct(a){ return Math.min(100, Math.round(totalHoras(a) / CARGA_TOTAL * 100)); }
+function fmtH(h){ const H = Math.floor(h + 1e-9); const M = Math.round((h - H) * 60); return M ? `${H}h${String(M).padStart(2,"0")}` : `${H}h`; }
+function pctColor(p){ return p >= 75 ? "#5fd0a0" : p >= 50 ? "#f0c869" : "#e88b8b"; }
+
 function renderFrequencia(){
   const curso = $("freqCurso").value;
   const data = $("freqData").value;
   $("freqDatas").innerHTML = getDatas().map(d=>`<span class="datebtn ${d===data?"on":""}" style="display:inline-flex;align-items:center;gap:7px;"><span onclick="setFreqData('${d}')" style="cursor:pointer;">${fmtDateBR(d)}</span><span onclick="removeData('${d}')" title="Remover data" style="cursor:pointer;font-weight:700;opacity:.55;font-size:14px;line-height:1;">×</span></span>`).join("");
-  const list = alunos.filter(a => (a.curso||CURSOS[0]) === curso);
+  const list = alunosDoCurso(curso);
   $("freqEmpty").hidden = list.length > 0;
-  if (!data){ $("freqInfo").textContent = "Selecione uma data acima para marcar presença."; $("freqRows").innerHTML = ""; return; }
-  let pres = 0;
-  $("freqRows").innerHTML = list.map(a=>{
-    const on = !!((a.presencas||{})[data]);
-    if (on) pres++;
-    return `<tr><td class="name">${esc(a.nome)}</td><td class="muted">${esc(a.curso||CURSOS[0])}</td>
-      <td style="text-align:center;"><input type="checkbox" class="chk" ${on?"checked":""} onchange="togglePresenca('${a.id}','${data}',this.checked)"></td></tr>`;
+  if (!data){ $("freqInfo").textContent = "Selecione uma data acima para lançar entrada e saída."; $("freqCards").innerHTML = ""; return; }
+  let presentes = 0;
+  $("freqCards").innerHTML = list.map(a=>{
+    const rec = (a.presencas||{})[data];
+    const e = (rec && rec.e) || (rec === true ? "07:00" : "");
+    const s = (rec && rec.s) || (rec === true ? "17:00" : "");
+    const hoje = dayHours(rec && rec !== true ? {e,s} : rec);
+    if (hoje > 0) presentes++;
+    const tot = totalHoras(a), pct = presencaPct(a);
+    return `<div class="fcard">
+      <div class="fcard-top">
+        <div class="fcard-name">${esc(a.nome)}</div>
+        <div class="fcard-total">Presença acumulada: <b>${fmtH(tot)}</b> de ${CARGA_TOTAL}h · <b class="pct-pill" style="color:${pctColor(pct)}">${pct}%</b></div>
+      </div>
+      <div class="fcard-times">
+        <label>Entrada <input type="time" value="${e}" onchange="setHora('${a.id}','${data}','e',this.value)"></label>
+        <label>Saída <input type="time" value="${s}" onchange="setHora('${a.id}','${data}','s',this.value)"></label>
+        <span class="fcard-day">${hoje > 0 ? fmtH(hoje) + " neste dia" : "sem presença neste dia"}</span>
+        ${(e||s) ? `<button class="link" onclick="limparDia('${a.id}','${data}')">limpar dia</button>` : ""}
+      </div>
+    </div>`;
   }).join("");
-  $("freqInfo").innerHTML = `Data <strong style="color:#EAF3FB;">${fmtDateBR(data)}</strong> · Presentes: <strong style="color:#EAF3FB;">${pres}</strong> de ${list.length}`;
+  $("freqInfo").innerHTML = `Data <b style="color:#EAF3FB;">${fmtDateBR(data)}</b> · Presentes: <b style="color:#EAF3FB;">${presentes}</b> de ${list.length} · Carga do curso: ${CARGA_TOTAL}h`;
 }
 
-async function togglePresenca(id, date, checked){
+async function setHora(id, date, campo, valor){
   const a = alunos.find(x=>x.id===id); if(!a) return;
   const p = Object.assign({}, a.presencas || {});
-  if (checked) p[date] = true; else delete p[date];
+  let rec = p[date];
+  if (rec === true) rec = { e:"07:00", s:"17:00" };
+  rec = Object.assign({}, (rec && typeof rec === "object") ? rec : {});
+  rec[campo] = valor;
+  if (!rec.e && !rec.s) delete p[date]; else p[date] = rec;
   const { error } = await sb.from("alunos").update({ presencas: p }).eq("id", id);
-  if (error) { alert("Erro ao salvar presença: " + error.message); return; }
+  if (error) { alert("Erro ao salvar horário: " + error.message); return; }
+  a.presencas = p;
+  renderFrequencia();
+}
+
+async function limparDia(id, date){
+  const a = alunos.find(x=>x.id===id); if(!a) return;
+  const p = Object.assign({}, a.presencas || {}); delete p[date];
+  const { error } = await sb.from("alunos").update({ presencas: p }).eq("id", id);
+  if (error) { alert("Erro: " + error.message); return; }
   a.presencas = p;
   renderFrequencia();
 }
