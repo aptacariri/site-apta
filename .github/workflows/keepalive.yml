@@ -1,0 +1,20 @@
+name: Supabase keep-alive
+
+# Mantém o projeto do Supabase ativo (plano grátis pausa após 7 dias sem uso).
+# Faz uma pequena consulta ao banco a cada 3 dias, de graça, via GitHub Actions.
+
+on:
+  schedule:
+    - cron: "0 12 */3 * *"   # a cada 3 dias, meio-dia UTC
+  workflow_dispatch: {}        # permite rodar manualmente pelo botão "Run workflow"
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Consultar o banco (registra atividade)
+        run: |
+          code=$(curl -s -o /dev/null -w "%{http_code}" \
+            -H "apikey: sb_publishable_m4KHZH_YMoFy_g962g1zoA_lxK9QZ1S" \
+            "https://mfbmdilplcgwdqqbgsab.supabase.co/rest/v1/alunos?select=id&limit=1")
+          echo "Supabase respondeu: $code"
